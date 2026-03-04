@@ -46,10 +46,12 @@
         
         
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CFira+Code:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Fira Code"}</style>
       
     
+    
+      <link rel="stylesheet" href="../stylesheets/extra.css">
     
     <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -506,7 +508,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📂 СТРУКТУРА ПАПОК
+        📂 СТРУКТУРА САЙТА
       
     </span>
   </a>
@@ -1196,7 +1198,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        📂 СТРУКТУРА ПАПОК
+        📂 СТРУКТУРА САЙТА
       
     </span>
   </a>
@@ -1221,24 +1223,23 @@
 
 
 <h1 id="avtalt-selvbosetting-2026">Avtalt Selvbosetting: Навигатор по Норвегии (Март 2026)<a class="headerlink" href="#avtalt-selvbosetting-2026" title="Permanent link">&para;</a></h1>
-<p>Этот репозиторий — база знаний для переезда и работы с <strong>Коммунами</strong> (на примере Oslo, Nordre Follo, Lillestrøm). Помните: решение принимает не локация, а <strong>Муниципалитет (Kommune)</strong> — административный орган с собственным бюджетом и квотами.</p>
+<p>Эта база знаний создана для переезда и работы с <strong>Коммунами</strong> (на примере Oslo, Nordre Follo, Lillestrøm). Важно понимать: в Норвегии решение о вашем расселении принимает именно <strong>Муниципалитет (Kommune)</strong> — независимый административный орган со своим бюджетом, правилами и квотами на прием беженцев.</p>
 <h2 id="-5">🚀 ЧТО ДЕЛАТЬ ПРЯМО СЕЙЧАС (Топ-5 шагов)<a class="headerlink" href="#-5" title="Permanent link">&para;</a></h2>
 <ol>
-<li><strong>Соберите документы</strong> (UDI Vedtak в PDF, фото карточки ВНЖ). Сложите их локально в папку <code>07_Мои_Документы/</code> (настроена так, чтобы не утечь в сеть, см. <code>.gitignore</code>).</li>
-<li><strong>Заполните Профессиональный Профиль</strong>. Возьмите шаблон <code>03_Шаблоны_Писем/Профиль_Звукорежиссера_Бизнес.md</code> и адаптируйте под свою профессию — это ваше главное преимущество при общении с коммуной и арендодателями.</li>
-<li><strong>Выберите коммуну</strong>. Зайдите в <a href="../04_%D0%9A%D0%BE%D0%BC%D0%BC%D1%83%D0%BD%D1%8B_%D0%B8_%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B/%D0%9D%D0%BE%D1%80%D0%B4%D1%80%D0%B5_%D0%A4%D0%BE%D0%BB%D0%BB%D0%BE/">04_Коммуны_и_Контакты/Нордре_Фолло.md</a> для примера того, как оцениваются шансы.</li>
-<li><strong>Начните поиск на Finn.no</strong> с фильтрами до 11 000 NOK. <em>Важно:</em> 90% арендодателей откажут с NAV Garanti (они боятся бюрократии NAV в случае порчи имущества, им нужны деньги на депозитном счету). Предлагайте свои деньги на депозит (если есть) или сразу используйте аргумент про прямую выплату арендной платы. Как найдете — берите шаблон из <code>03_Шаблоны_Писем/Арендодателю.md</code>.</li>
+<li><strong>Соберите документы</strong> (UDI Vedtak в PDF, фото карточки ВНЖ). Сложите их локально в надежном месте для быстрой отправки в коммуну и арендодателю.</li>
+<li><strong>Заполните Профессиональный Профиль</strong>. Возьмите шаблон <a href="../03_%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D0%9F%D0%B8%D1%81%D0%B5%D0%BC/%D0%9F%D1%80%D0%BE%D1%84%D0%B8%D0%BB%D1%8C_%D0%97%D0%B2%D1%83%D0%BA%D0%BE%D1%80%D0%B5%D0%B6%D0%B8%D1%81%D1%81%D0%B5%D1%80%D0%B0_%D0%91%D0%B8%D0%B7%D0%BD%D0%B5%D1%81/">Профиль Звукорежиссера (Бизнес)</a> и адаптируйте под свою профессию — это ваше главное преимущество при общении с коммуной и арендодателями.</li>
+<li><strong>Выберите коммуну</strong>. Откройте разбор <a href="../04_%D0%9A%D0%BE%D0%BC%D0%BC%D1%83%D0%BD%D1%8B_%D0%B8_%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B/%D0%9D%D0%BE%D1%80%D0%B4%D1%80%D0%B5_%D0%A4%D0%BE%D0%BB%D0%BB%D0%BE/">Нордре Фолло</a> для примера того, как оцениваются шансы.</li>
+<li><strong>Начните поиск на Finn.no</strong> с фильтрами до 11 000 NOK. <em>Важно:</em> 90% арендодателей откажут с NAV Garanti (они боятся бюрократии NAV в случае порчи имущества, им нужны деньги на депозитном счету). Предлагайте свои деньги на депозит (если есть) или сразу используйте аргумент про прямую выплату арендной платы. Как найдете — берите шаблон письма <a href="../03_%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D0%9F%D0%B8%D1%81%D0%B5%D0%BC/%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%BE%D0%B4%D0%B0%D1%82%D0%B5%D0%BB%D1%8E/">Арендодателю</a>.</li>
 <li><strong>Получите одобрение (Avtalt Selvbosetting)</strong>. <em>Ничего не подписывайте до того</em>, как коммуна скажет «Да».</li>
 </ol>
-<h2 id="_1">📂 СТРУКТУРА ПАПОК<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">📂 СТРУКТУРА САЙТА<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong><a href="../01_%D0%97%D0%B0%D0%BA%D0%BE%D0%BD%D1%8B_%D0%B8_%D0%9F%D1%80%D0%B0%D0%B2%D0%B0/%D0%AE%D1%80%D0%B8%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%BE%D0%B1%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/">01_Законы_и_Права/</a></strong>: Ваш юридический щит против бюрократии.</li>
-<li><strong><a href="../02_%D0%9F%D0%BE%D1%88%D0%B0%D0%B3%D0%BE%D0%B2%D1%8B%D0%B9_%D0%93%D0%B0%D0%B9%D0%B4/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F/">02_Пошаговый_Гайд/</a></strong>: Операционный план «От и До».</li>
-<li><strong><a href="../03_%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D0%9F%D0%B8%D1%81%D0%B5%D0%BC/%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%BE%D0%B4%D0%B0%D1%82%D0%B5%D0%BB%D1%8E/">03_Шаблоны_Писем/</a></strong>: Готовые письма и <strong>Профессиональный Профиль</strong> (ваше секретное оружие).</li>
-<li><strong><a href="../04_%D0%9A%D0%BE%D0%BC%D0%BC%D1%83%D0%BD%D1%8B_%D0%B8_%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B/%D0%9E%D1%81%D0%BB%D0%BE/">04_Коммуны_и_Контакты/</a></strong>: Разбор целевых коммун на примерах.</li>
-<li><strong><a href="../05_%D0%A4%D0%B8%D0%BD%D0%B0%D0%BD%D1%81%D1%8B_%D0%B8_NAV/%D0%92%D1%8B%D0%BF%D0%BB%D0%B0%D1%82%D1%8B_%D0%B8_%D0%93%D0%B0%D1%80%D0%B0%D0%BD%D1%82%D0%B8%D0%B8/">05_Финансы_и_NAV/</a></strong>: Финансовая база и страховка.</li>
-<li><strong><a href="../06_%D0%A7%D0%B5%D0%BA_%D0%BB%D0%B8%D1%81%D1%82%D1%8B/%D0%9F%D1%80%D0%B8%D0%B5%D0%BC%D0%BA%D0%B0_%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B/">06_Чек_листы/</a></strong>: Памятки для проверок (не верьте на слово — проверяйте!).</li>
-<li><strong><a href="">07_Мои_Документы/</a></strong>: (Создайте локально) Хранилище личных PDFs и сканов (скрыто в <code>.gitignore</code>).</li>
+<li><strong><a href="../01_%D0%97%D0%B0%D0%BA%D0%BE%D0%BD%D1%8B_%D0%B8_%D0%9F%D1%80%D0%B0%D0%B2%D0%B0/%D0%AE%D1%80%D0%B8%D0%B4%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%BE%D0%B1%D0%BE%D1%81%D0%BD%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/">Законы и Права</a></strong>: Ваш юридический щит против бюрократии.</li>
+<li><strong><a href="../02_%D0%9F%D0%BE%D1%88%D0%B0%D0%B3%D0%BE%D0%B2%D1%8B%D0%B9_%D0%93%D0%B0%D0%B9%D0%B4/%D0%98%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BA%D1%86%D0%B8%D1%8F/">Пошаговый Гайд</a></strong>: Операционный план «От и До».</li>
+<li><strong><a href="../03_%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D0%9F%D0%B8%D1%81%D0%B5%D0%BC/%D0%90%D1%80%D0%B5%D0%BD%D0%B4%D0%BE%D0%B4%D0%B0%D1%82%D0%B5%D0%BB%D1%8E/">Шаблоны Писем</a></strong>: Готовые письма и <strong>Профессиональный Профиль</strong> (ваше секретное оружие).</li>
+<li><strong><a href="../04_%D0%9A%D0%BE%D0%BC%D0%BC%D1%83%D0%BD%D1%8B_%D0%B8_%D0%9A%D0%BE%D0%BD%D1%82%D0%B0%D0%BA%D1%82%D1%8B/%D0%9E%D1%81%D0%BB%D0%BE/">Коммуны и Контакты</a></strong>: Разбор целевых коммун на примерах.</li>
+<li><strong><a href="../05_%D0%A4%D0%B8%D0%BD%D0%B0%D0%BD%D1%81%D1%8B_%D0%B8_NAV/%D0%92%D1%8B%D0%BF%D0%BB%D0%B0%D1%82%D1%8B_%D0%B8_%D0%93%D0%B0%D1%80%D0%B0%D0%BD%D1%82%D0%B8%D0%B8/">Финансы и NAV</a></strong>: Финансовая база и страховка.</li>
+<li><strong><a href="../06_%D0%A7%D0%B5%D0%BA_%D0%BB%D0%B8%D1%81%D1%82%D1%8B/%D0%9F%D1%80%D0%B8%D0%B5%D0%BC%D0%BA%D0%B0_%D0%BA%D0%B2%D0%B0%D1%80%D1%82%D0%B8%D1%80%D1%8B/">Чек-листы</a></strong>: Памятки для проверок (не верьте на слово — проверяйте!).</li>
 </ul>
 <div class="admonition danger">
 <p class="admonition-title">КРИТИЧЕСКИ ВАЖНО</p>

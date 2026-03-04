@@ -4,6 +4,9 @@ site_description: Инструкция, шаблоны и чек-листы дл
 theme:
   name: material
   language: ru
+  font:
+    text: Inter
+    code: Fira Code
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -11,7 +14,7 @@ theme:
       accent: indigo
       toggle:
         icon: material/weather-night
-        name: Переключить на темную тему
+        name: Переключить на тёмную тему
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
       primary: indigo
@@ -52,3 +55,6 @@ markdown_extensions:
   - pymdownx.superfences
   - toc:
       permalink: true
+
+extra_css:
+  - stylesheets/extra.css
