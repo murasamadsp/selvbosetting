@@ -15,4 +15,5 @@ __pycache__/
 .idea/
 .DS_Store
 
-entire.log
+.entire/
+.claude/
