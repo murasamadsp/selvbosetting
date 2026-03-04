@@ -1,0 +1,54 @@
+site_name: Гайд по самозаселению (Avtalt Selvbosetting)
+site_description: Инструкция, шаблоны и чек-листы для аренды жилья в Норвегии с гарантией NAV
+
+theme:
+  name: material
+  language: ru
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Переключить на темную тему
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Переключить на светлую тему
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Главная: index.md
+  - С чего начать: 00_НАЧНИ_ЗДЕСЬ.md
+  - Пошаговый Гайд:
+    - Инструкция: 02_Пошаговый_Гайд/Инструкция.md
+  - Законы и Права:
+    - Юридическое обоснование: 01_Законы_и_Права/Юридическое_обоснование.md
+  - Шаблоны Писем:
+    - Арендодателю: 03_Шаблоны_Писем/Арендодателю.md
+    - Профиль участника: 03_Шаблоны_Писем/Профиль_Звукорежиссера_Бизнес.md
+  - Коммуны и Контакты:
+    - Осло: 04_Коммуны_и_Контакты/Осло.md
+    - Лиллестрём: 04_Коммуны_и_Контакты/Лиллестрём.md
+    - Нордре Фолло: 04_Коммуны_и_Контакты/Нордре_Фолло.md
+  - Финансы и NAV:
+    - Выплаты и Гарантии: 05_Финансы_и_NAV/Выплаты_и_Гарантии.md
+  - Чек-листы:
+    - Дистанционная проверка: 06_Чек_листы/Дистанционная_проверка.md
+    - Приемка квартиры: 06_Чек_листы/Приемка_квартиры.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - toc:
+      permalink: true
