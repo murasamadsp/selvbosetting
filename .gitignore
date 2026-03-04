@@ -1,0 +1,16 @@
+# Selvbosetting Private Documents
+07_Мои_Документы/
+# Ignore old location just in case
+06_Чек_листы/*.pdf
+06_Чек_листы/*.jpg
+06_Чек_листы/*.png
+
+# Python / Environment
+.venv/
+__pycache__/
+*.pyc
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
