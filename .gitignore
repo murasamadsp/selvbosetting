@@ -5,6 +5,9 @@
 06_Чек_листы/*.jpg
 06_Чек_листы/*.png
 
+# MkDocs build output (генерируется автоматически)
+site/
+
 # Python / Environment
 .venv/
 __pycache__/
