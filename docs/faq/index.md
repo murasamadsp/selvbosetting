@@ -39,7 +39,9 @@ ______________________________________________________________________
 
 ### Чи можна отримати bostøtte?
 
-Так. Детальніше: [Виплати та Гарантії → Bostøtte](../finances/payments.md) | [Калькулятор](https://tjenester.husbanken.no/bostotte-kalkulator/index.html)
+Так, але є пастка: якщо ви на **sosialhjelp** — NAV вираховує bostøtte з виплати, і ваш реальний дохід не змінюється. Корисна лише після старту **introduksjonsprogram**, де стипендія фіксована.
+
+Детальніше: [Виплати та Гарантії → Bostøtte](../finances/payments.md) | [Калькулятор](https://tjenester.husbanken.no/bostotte-kalkulator/index.html)
 
 ______________________________________________________________________
 
