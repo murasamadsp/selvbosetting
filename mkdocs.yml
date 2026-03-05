@@ -46,6 +46,7 @@ nav:
     - Виплати та Гарантії: finances/payments.md
     - Як саме платять: finances/how-payments-work.md
     - Банківський рахунок: finances/bank-account.md
+    - Програма інтеграції: finances/program.md
   - Чек-листи:
     - Дистанційна перевірка: checklists/remote-check.md
     - Виїзд із центру: checklists/leaving-mottak.md
