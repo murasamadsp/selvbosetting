@@ -1,0 +1,20 @@
+{
+  "httpHeaders": [
+    {
+      "urls": ["https://"],
+      "headers": {
+        "User-Agent": "Mozilla/5.0 (compatible; linkchecker)"
+      }
+    }
+  ],
+  "timeout": "10s",
+  "retryOn429": true,
+  "retryCount": 3,
+  "fallbackRetryDelay": "5s",
+  "aliveStatusCodes": [200, 301, 302, 403],
+  "ignorePatterns": [
+    { "pattern": "^https://lovdata\\.no" },
+    { "pattern": "^https://tjenester\\.husbanken\\.no" },
+    { "pattern": "^https://www\\.finn\\.no" }
+  ]
+}

@@ -1,0 +1,16 @@
+repos:
+  # Форматирование Markdown
+  - repo: https://github.com/executablebooks/mdformat
+    rev: 0.7.21
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          - mdformat-mkdocs
+          - mdformat-gfm
+
+  # Проверка внешних ссылок
+  - repo: https://github.com/tcort/markdown-link-check
+    rev: v3.13.6
+    hooks:
+      - id: markdown-link-check
+        args: ["--config", ".markdown-link-check.json"]
