@@ -45,11 +45,13 @@ nav:
   - Фінанси та NAV:
     - Виплати та Гарантії: finances/payments.md
     - Як саме платять: finances/how-payments-work.md
+    - Банківський рахунок: finances/bank-account.md
   - Чек-листи:
-    - Виїзд із центру: checklists/leaving-mottak.md
     - Дистанційна перевірка: checklists/remote-check.md
+    - Виїзд із центру: checklists/leaving-mottak.md
     - Приймання квартири: checklists/move-in.md
   - Побут: daily.md
+  - Глосарій: glossary.md
   - FAQ:
     - Часті питання: faq/index.md
     - Якщо відмовили: faq/if-rejected.md

@@ -35,3 +35,9 @@ ______________________________________________________________________
 !!! tip "Текст для орендодавця (норвезькою)"
 
     *«Siden jeg bor langt unna, trenger kommunen bekreftelse på brannsikkerhet før de godkjenner bosettingen. Kan du sende meg bilder av røykvarslere, brannslukningsapparat og en video av leiligheten? Kommunen sjekker også om boligen er godkjent for utleie.»*
+
+## ✅ Якщо все гаразд
+
+Квартира пройшла перевірку — надсилайте матеріали в комуну разом із [запитом на Avtalt Selvbosetting](../guide/index.md#крок-3-запит-у-комуну-kvalifiseringssenter).
+
+Якщо комуна схвалила — переходьте до [Чек-листу виїзду з центру](leaving-mottak.md).
