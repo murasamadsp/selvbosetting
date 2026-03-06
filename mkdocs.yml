@@ -36,8 +36,8 @@ nav:
   - Покроковий Гайд: guide/index.md
   - Закони та Права: laws/index.md
   - Шаблони:
-    - Листи орендодавцю: templates/landlord.md
-    - Профіль учасника: templates/profile.md
+    - Листи орендодавцю: forms/landlord.md
+    - Профіль учасника: forms/profile.md
   - Комуни:
     - Осло: communes/oslo.md
     - Ліллестрьом: communes/lillestrom.md
