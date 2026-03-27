@@ -5,7 +5,7 @@
 ## 📞 КУДИ ЗВЕРТАТИСЯ (Flyktningtjenesten)
 
 - **Назва**: NAV Lillestrøm (відділ інтеграції).
-- **E-mail**: [postmottak@lillestrom.kommune.no](mailto:postmottak@lillestrom.kommune.no) (у темі: «Til Flyktningtjenesten - Søknad om avtalt selvbosetting»).
+- **E-mail**: [postmottak@lillestrom.kommune.no](mailto:postmottak@lillestrom.kommune.no) (у темі: «Til Flyktningtjenesten — Søknad om avtalt selvbosetting»).
 - **Телефон (Центральний)**: **66 93 80 00**. — [Джерело: lillestrom.kommune.no](https://www.lillestrom.kommune.no/kontakt-oss/)
 - **Прямий телефон NAV Lillestrøm**: **40 63 32 76**. — [Джерело: lillestrom.kommune.no](https://www.lillestrom.kommune.no/integrering-og-flyktninger/informasjon-om-krisen-i-ukraina/)
 - **Сайт**: [Lillestrøm kommune - Інформація для біженців з України](https://www.lillestrom.kommune.no/integrering-og-flyktninger/informasjon-om-krisen-i-ukraina/)
@@ -18,9 +18,9 @@
 
 ## 🚉 ДЕ ШУКАТИ (Райони)
 
-1. **Lillestrøm Sentrum**: Дорого, але до Осло — **10 хвилин** поїздом (що 10-15 хвилин).
+1. **Lillestrøm Sentrum**: Дорого, але до Осло — **10 хвилин** поїздом (орієнтовно 10–15 хвилин).
 1. **Kjeller / Skjetten**: Трохи дешевше, ходять автобуси до станції Ліллестрьом.
-1. **Fetsund**: 20 хвилин до Осло. Ціни на 10-15% нижчі, ніж у самому Ліллестрьомі. Реально знайти житло за 9-10к.
+1. **Fetsund**: 20 хвилин до Осло. Ціни на 10–15% нижчі, ніж у самому Ліллестрьомі. Можна знайти житло за 9–10 тис.
 
 !!! warning "Нюанси комуни"
 
@@ -34,11 +34,11 @@ ______________________________________________________________________
 Ліллестрьом отримує від IMDi **Integreringstilskudd** — грант за кожну прийняту людину.
 
 - **Сума**: ≈ 870 000 NOK за 5 років на одну особу (розподілено по роках).
-- **Логіка**: Комуні вигідно приймати кандидатів, які мають шанс швидко знайти роботу — менше витрат для самої комуни.
+- **Логіка**: Комуні вигідно приймати учасників, які мають шанс швидко знайти роботу — це зменшує витрати для самої комуни.
 - **Доказ**: [IMDi — Integreringstilskudd](https://www.imdi.no/tilskudd/integreringstilskudd/)
 
 ______________________________________________________________________
 
 !!! tip "Корисна порада"
 
-    Ліллестрьом дуже цінує, якщо кандидат вже почав вчити норвезьку (навіть якщо тільки на курсах в акутт-центрі). Обов'язково вкажіть це в листі!
+- Ліллестрьом дуже цінує, якщо ви вже почали вивчати норвезьку (навіть якщо відвідуєте курси в муттаку). Обов'язково вкажіть це в листі!
