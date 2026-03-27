@@ -1,6 +1,6 @@
 # Досьє: Ліллестрьом (Lillestrøm kommune)
 
-**Статус на Березень 2026**: IMDi запитав 85 місць, комуна затвердила (vedtak) **77 місць**. Конкуренція висока. — [Джерело: IMDi Bosettingstall 2026](https://www.imdi.no/bosetting/bosettingstall/nokkeltall-bosetting-2026/)
+**Статус на Березень 2026**: IMDi запитав 85 місць, комуна затвердила (vedtak) **77 місць**. Конкуренція залишається високою. — [Джерело: IMDi Bosettingstall 2026](https://www.imdi.no/bosetting/bosettingstall/nokkeltall-bosetting-2026/)
 
 ## 📞 КУДИ ЗВЕРТАТИСЯ (Flyktningtjenesten)
 

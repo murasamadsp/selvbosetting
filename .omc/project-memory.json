@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1773700329934,
+  "projectRoot": "/Users/murasama/Projects/selvbosetting",
+  "techStack": {
+    "languages": [
+      {
+        "name": "C/C++",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "Makefile"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": "make build",
+    "testCommand": "make test",
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 4,
+      "lastAccessed": 1773700329856,
+      "keyFiles": [
+        "daily.md",
+        "glossary.md",
+        "index.md",
+        "start.md"
+      ]
+    },
+    "site": {
+      "path": "site",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1773700329860,
+      "keyFiles": [
+        "404.html",
+        "index.html",
+        "sitemap.xml",
+        "sitemap.xml.gz"
+      ]
+    },
+    "site/assets": {
+      "path": "site/assets",
+      "purpose": "Static assets",
+      "fileCount": 0,
+      "lastAccessed": 1773700329860,
+      "keyFiles": []
+    }
+  },
+  "hotPaths": [],
+  "userDirectives": []
+}

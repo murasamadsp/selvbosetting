@@ -1,6 +1,6 @@
 # Досьє: Осло (Oslo kommune)
 
-**Статус на Березень 2026**: Квота 600 місць (vedtak 600). Конкуренція екстремальна. — [Джерело: IMDi Bosettingstall 2026](https://www.imdi.no/bosetting/bosettingstall/nokkeltall-bosetting-2026/)
+**Статус на Березень 2026**: Квота 600 місць (vedtak 600). Конкуренція дуже висока. — [Джерело: IMDi Bosettingstall 2026](https://www.imdi.no/bosetting/bosettingstall/nokkeltall-bosetting-2026/)
 
 ## 📞 КУДИ ЗВЕРТАТИСЯ (Flyktningtjenesten)
 

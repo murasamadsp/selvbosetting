@@ -12,7 +12,7 @@ docs/
 ├── start.md                    # З чого почати
 ├── guide/index.md              # Покроковий гайд
 ├── laws/index.md               # Закони та права
-├── templates/                  # Шаблони листів
+├── forms/                      # Шаблони листів
 ├── communes/                   # Досьє: Осло, Ліллестрьом, Нордре Фолло
 ├── finances/                   # Виплати, NAV-garanti, механізм оплати
 ├── checklists/                 # Виїзд із муттака, перевірка квартири
@@ -24,4 +24,4 @@ docs/
 
 Сайт побудований на [MkDocs Material](https://squidfunk.github.io/mkdocs-material/). Деплой автоматичний через GitHub Actions при push у `main`.
 
-Редагувати потрібно лише файли в `docs/` — `site/` генерується автоматично.
+Робіть зміни тільки в `docs/` — `site/` генерується автоматично.
