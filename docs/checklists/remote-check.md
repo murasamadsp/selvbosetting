@@ -30,7 +30,7 @@
 Запитайте орендодавця, чи має житло офіційний статус **«Godkjent for utleie»** (Схвалено для здачі).
 
 - **Чому важливо**: Згідно з *Plan- og bygningsloven*, приміщення має бути зареєстроване як житлове. Якщо це «нелегальний підвал» (tilleggsdel), комуна миттєво побачить це в реєстрі (Matrikkelen) і відмовить у розселенні.
-- **Як перевірити самому**: Зайдіть на [SeEiendom (Kartverket)](https://seeieendom.kartverket.no/), введіть адресу та перевірте статтю «Bygningstype». Якщо там вказано «Enebolig med hybelleilighet/sokkelleilighet» — це гарний знак.
+- **Як перевірити самому**: Зайдіть на [SeEiendom (Kartverket)](https://seeiendom.kartverket.no/), введіть адресу та перевірте статтю «Bygningstype». Якщо там вказано «Enebolig med hybelleilighet/sokkelleilighet» — це гарний знак.
 
 ______________________________________________________________________
 

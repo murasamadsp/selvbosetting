@@ -5,8 +5,8 @@
 ## 📞 КУДИ ЗВЕРТАТИСЯ (Flyktningtjenesten)
 
 - **Назва**: Byrådsavdeling for arbeid, integrering og sosiale tjenester.
-- **E-mail (Flyktningtjenesten)**: *Не публікується на сайті.* Використовуйте eDialog на [oslo.kommune.no](https://www.oslo.kommune.no/kontakt-oslo-kommune/) або загальну скриньку Velferdsetaten: [postmottak@vel.oslo.kommune.no](mailto:postmottak@vel.oslo.kommune.no).
-- **Телефон (Центральний)**: **21 80 21 80** (просіть з'єднати з *flyktningtjenesten* у вашому районі/bydel). — [Джерело: oslo.kommune.no](https://www.oslo.kommune.no/kontakt-oslo-kommune/)
+- **E-mail (Flyktningtjenesten)**: *Не публікується на сайті.* Використовуйте eDialog на [oslo.kommune.no](https://www.oslo.kommune.no/kontakt/) або загальну скриньку Velferdsetaten: [postmottak@vel.oslo.kommune.no](mailto:postmottak@vel.oslo.kommune.no).
+- **Телефон (Центральний)**: **21 80 21 80** (просіть з'єднати з *flyktningtjenesten* у вашому районі/bydel). — [Джерело: oslo.kommune.no](https://www.oslo.kommune.no/kontakt/)
 - **Сайт**: [Oslo kommune - Flyktninger og inkludering](https://www.oslo.kommune.no/flyktninger-og-inkludering/)
 
 ## 💰 ГРОШІ ТА ЛІМІТИ (NAV Oslo)
@@ -34,7 +34,7 @@ ______________________________________________________________________
 
 - **Сума**: ≈ 870 000 NOK за 5 років на одну особу (розподілено по роках).
 - **Логіка**: Комуні вигідно приймати учасників, які мають шанс швидко знайти роботу — це зменшує витрати для самої комуни.
-- **Доказ**: [IMDi — Integreringstilskudd](https://www.imdi.no/tilskudd/integreringstilskudd/)
+- **Доказ**: [IMDi — Integreringstilskudd](https://www.imdi.no/tilskudd/tilskudd-offentlige-virksomheter-kommuner-og-fylkeskommuner/integreringstilskudd/)
 
 ______________________________________________________________________
 

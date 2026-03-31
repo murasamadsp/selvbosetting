@@ -35,7 +35,7 @@ ______________________________________________________________________
 
 - **Сума**: ≈ 870 000 NOK за 5 років на одну особу (розподілено по роках).
 - **Логіка**: Комуні вигідно приймати учасників, які мають шанс швидко знайти роботу — це зменшує витрати для самої комуни.
-- **Доказ**: [IMDi — Integreringstilskudd](https://www.imdi.no/tilskudd/integreringstilskudd/)
+- **Доказ**: [IMDi — Integreringstilskudd](https://www.imdi.no/tilskudd/tilskudd-offentlige-virksomheter-kommuner-og-fylkeskommuner/integreringstilskudd/)
 
 ______________________________________________________________________
 

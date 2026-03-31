@@ -8,10 +8,10 @@ ______________________________________________________________________
 
 KVS — орган Nordre Follo, що відповідає за босеттінг та кваліфікацію біженців.
 
-- **E-mail**: [kvalifiseringssenter@nordrefollo.kommune.no](mailto:kvalifiseringssenter@nordrefollo.kommune.no) — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/kvalifiseringssenteret/)
-- **Телефон**: **45 83 30 02** — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/kvalifiseringssenteret/)
-- **Адреса**: Kolbotnveien 30, 1410 Kolbotn — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/kvalifiseringssenteret/)
-- **Години роботи**: Пн–Пт 08:00–15:30 — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/kvalifiseringssenteret/)
+- **E-mail**: [kvalifiseringssenter@nordrefollo.kommune.no](mailto:kvalifiseringssenter@nordrefollo.kommune.no) — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/skole/kvalifiseringssenter/)
+- **Телефон**: **45 83 30 02** — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/skole/kvalifiseringssenter/)
+- **Адреса**: Kolbotnveien 30, 1410 Kolbotn — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/skole/kvalifiseringssenter/)
+- **Години роботи**: Пн–Пт 08:00–15:30 — [Джерело: nordrefollo.kommune.no](https://www.nordrefollo.kommune.no/tjenester/skole/kvalifiseringssenter/)
 
 ______________________________________________________________________
 
@@ -49,12 +49,12 @@ ______________________________________________________________________
 
 ## 🏘️ РАЙОНИ
 
-| Район        | До Oslo S     | Коментар                    |
-| ------------ | ------------- | --------------------------- |
-| **Kolbotn**  | ~16 хв 🚂    | Центр комуни, KVS тут       |
-| **Sofiemyr** | ~19 хв 🚌+🚂 | Квартира Finn 293387930 тут |
+| Район        | До Oslo S    | Коментар                      |
+| ------------ | ------------ | ----------------------------- |
+| **Kolbotn**  | ~16 хв 🚂    | Центр комуни, KVS тут         |
+| **Sofiemyr** | ~19 хв 🚌+🚂 | Квартира Finn 293387930 тут   |
 | **Ski**      | ~11 хв 🚂    | Follobanen, більше пропозицій |
-| **Langhus**  | ~14 хв 🚂    | Найбюджетніший              |
+| **Langhus**  | ~14 хв 🚂    | Найбюджетніший                |
 
 ______________________________________________________________________
 
