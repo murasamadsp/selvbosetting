@@ -32,6 +32,7 @@ URL_DEFAULT = "https://www.imdi.no/bosetting/bosettingstall/nokkeltall-bosetting
 NOMINATIM_SEARCH_URL = "https://nominatim.openstreetmap.org/search"
 NOMINATIM_USER_AGENT = "bosetting-probability-script/1.0"
 NORWAY_BOUNDS = (57.2, 4.0, 72.2, 32.5)
+WATER_REVERSE_TYPES = {"water", "bay", "fjord", "sea", "ocean", "coastline"}
 
 # Real administrative-center coordinates for every Norwegian municipality (2024 borders).
 # Key = municipality name as it appears in IMDi tables.
@@ -641,6 +642,156 @@ def lookup_municipality_coords(municipality: str) -> Optional[tuple[float, float
     return None
 
 
+def normalize_label(value: str) -> str:
+    return re.sub(r"\s+", " ", (value or "").strip().lower())
+
+
+def reverse_geocode_point(
+    lat: float,
+    lon: float,
+    delay_seconds: float = 1.0,
+    max_retries: int = 3,
+) -> Optional[dict]:
+    params = urllib.parse.urlencode(
+        {
+            "format": "jsonv2",
+            "lat": f"{lat:.6f}",
+            "lon": f"{lon:.6f}",
+            "zoom": 12,
+            "addressdetails": 1,
+            "namedetails": 1,
+        }
+    )
+    request_url = f"{NOMINATIM_SEARCH_URL}/reverse?{params}"
+
+    for retry in range(max_retries + 1):
+        if retry > 0:
+            time.sleep(delay_seconds * (retry + 1) * 2)
+        request = urllib.request.Request(
+            request_url,
+            headers={"User-Agent": NOMINATIM_USER_AGENT},
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                payload = decode_web_content(response.read(), response.headers.get_content_charset())
+                result = json.loads(payload)
+        except urllib.error.HTTPError as exc:
+            if exc.code == 429 and retry < max_retries:
+                retry_after = exc.headers.get("Retry-After") if exc.headers else None
+                wait = delay_seconds * (retry + 2)
+                if retry_after:
+                    try:
+                        wait = max(wait, int(retry_after))
+                    except ValueError:
+                        pass
+                time.sleep(wait)
+                continue
+            return None
+        except Exception:
+            return None
+
+        if isinstance(result, dict):
+            return result
+    return None
+
+
+def is_water_reverse_point(reverse_data: Optional[dict]) -> bool:
+    if not isinstance(reverse_data, dict):
+        return False
+    cls = str(reverse_data.get("class", "")).lower()
+    typ = str(reverse_data.get("type", "")).lower()
+    if cls in {"natural", "waterway"}:
+        return typ in WATER_REVERSE_TYPES or "water" in typ
+    if cls == "landuse":
+        return typ in {"reservoir", "glacier", "bare_rock"}
+    return typ in WATER_REVERSE_TYPES
+
+
+def reverse_matches_municipality(reverse_data: Optional[dict], municipality: str) -> bool:
+    if not isinstance(reverse_data, dict):
+        return True
+    municipality_norm = normalize_label(municipality)
+    if not municipality_norm:
+        return True
+    address = reverse_data.get("address") or {}
+    if not isinstance(address, dict):
+        return True
+
+    candidates = (
+        address.get("municipality"),
+        address.get("city"),
+        address.get("town"),
+        address.get("village"),
+        address.get("hamlet"),
+        address.get("suburb"),
+        address.get("borough"),
+    )
+    has_any_candidate = False
+    for candidate in candidates:
+        candidate_norm = normalize_label(candidate)
+        if not candidate_norm:
+            continue
+        has_any_candidate = True
+        if municipality_norm in candidate_norm or candidate_norm in municipality_norm:
+            return True
+    if not has_any_candidate:
+        return True
+    return False
+
+
+def resolve_municipality_coordinate(
+    municipality: str,
+    county: str,
+    geocode_cache: Optional[dict],
+    geocode_delay: float = 1.0,
+    validate_land: bool = False,
+) -> Optional[tuple[float, float]]:
+    location = lookup_municipality_coords(municipality)
+
+    if not validate_land:
+        if location is not None:
+            return location
+    else:
+        if location is not None:
+            reverse = reverse_geocode_point(location[0], location[1], geocode_delay)
+            if reverse is None:
+                return location
+            if is_water_reverse_point(reverse):
+                location = None
+            elif not reverse_matches_municipality(reverse, municipality):
+                location = None
+            else:
+                return location
+
+    if geocode_cache is None:
+        return None
+
+    query_variants = [municipality]
+    if county and county.lower() != "ukjent fylke":
+        query_variants.append(f"{municipality}, {county}")
+    query_variants.append(f"{municipality}, Norway")
+    query_variants = list(dict.fromkeys(q for q in query_variants if q))
+
+    for query in query_variants:
+        candidate = geocode_with_nominatim(
+            query,
+            geocode_cache,
+            delay_seconds=geocode_delay,
+        )
+        if candidate is None:
+            continue
+        if not validate_land:
+            return candidate
+        reverse = reverse_geocode_point(candidate[0], candidate[1], geocode_delay)
+        if reverse is None:
+            return candidate
+        if is_water_reverse_point(reverse):
+            continue
+        if reverse_matches_municipality(reverse, municipality):
+            return candidate
+    return location
+
+
 def load_geocode_cache(path: str) -> dict:
     try:
         with open(path, "r", encoding="utf-8") as cache_file:
@@ -759,6 +910,8 @@ def build_heatmap_html(
     geocode_delay: float = 1.0,
     skip_geocode: bool = False,
     show_markers: bool = False,
+    validate_land: bool = False,
+    include_zero: bool = False,
 ) -> tuple[int, int]:
     geocode_cache = load_geocode_cache(geocode_cache_path)
     points: List[dict] = []
@@ -766,25 +919,18 @@ def build_heatmap_html(
     max_value = 0
 
     for name, value, percent in rows:
+        if not include_zero and value <= 0:
+            continue
         county, municipality = parse_municipality_query(name)
 
-        # 1) Built-in dictionary (real coordinates)
-        location = lookup_municipality_coords(municipality)
-
-        # 2) Nominatim as optional fallback for unknown municipalities
-        if location is None and not skip_geocode:
-            attempts = []
-            if county and county.lower() != "ukjent fylke":
-                attempts.append(f"{municipality}, {county}, Norway")
-            attempts.append(f"{municipality}, Norway")
-            for q in attempts:
-                try:
-                    location = geocode_with_nominatim(q, geocode_cache, delay_seconds=geocode_delay)
-                    if location is not None:
-                        break
-                except Exception as exc:
-                    print(f"WARNING: geocode failed for '{q}': {exc}", file=sys.stderr)
-                    location = None
+        # 1) Built-in dictionary, then optional online lookup.
+        location = resolve_municipality_coordinate(
+            municipality=municipality,
+            county=county,
+            geocode_cache=None if skip_geocode else geocode_cache,
+            geocode_delay=max(0.0, geocode_delay),
+            validate_land=validate_land,
+        )
 
         if location is None:
             not_found.append(municipality)
@@ -833,15 +979,14 @@ def build_heatmap_html(
       attribution: '&copy; OpenStreetMap contributors'
     }}).addTo(map);
 
-    const markerLayer = L.layerGroup();
     const heatData = points.map(p => [p.lat, p.lon, p.value]);
     const maxValue = {max_value};
     const maxPercent = points.reduce((acc, item) => Math.max(acc, item.percent), 0);
     const showMarkers = {str(show_markers).lower()};
 
     const heatLayer = L.heatLayer(heatData, {{
-      radius: 32,
-      blur: 20,
+      radius: 24,
+      blur: 16,
       maxZoom: 10,
       max: maxValue,
       minOpacity: 0.35,
@@ -856,40 +1001,39 @@ def build_heatmap_html(
 
     heatLayer.addTo(map);
 
-    for (const p of points) {{
-      const intensity = maxPercent > 0 ? (p.percent / maxPercent) : 0;
-      const size = 3 + Math.max(2, intensity) * 10;
-      const hue = 240 - 240 * intensity;
-      const color = `hsl(${{hue}}, 90%, 42%)`;
-      const marker = L.circleMarker([p.lat, p.lon], {{
-        radius: showMarkers ? size : 0,
-        color,
-        fillColor: color,
-        fillOpacity: showMarkers ? 0.38 : 0,
-        weight: showMarkers ? 1 : 0,
-        opacity: showMarkers ? 0.8 : 0
-      }});
-      marker.bindTooltip(
-        `<b>${{p.name}}</b><br/>Вероятность: ${{p.percent.toFixed(2)}}%<br/>` +
-        `Оснований: ${{p.value}}`,
-        {{ sticky: true }}
-      );
-      marker.bindPopup(`<b>${{p.name}}</b><br/>Вероятность: ${{p.percent.toFixed(2)}}%<br/>Оснований: ${{p.value}}`);
-      if (showMarkers) {{
+    const layers = {{
+      "Теплова карта (інтенсивність)": heatLayer
+    }};
+
+    if (showMarkers) {{
+      const markerLayer = L.layerGroup();
+      for (const p of points) {{
+        const intensity = maxPercent > 0 ? (p.percent / maxPercent) : 0;
+        const size = 3 + Math.max(2, intensity) * 10;
+        const hue = 240 - 240 * intensity;
+        const color = `hsl(${{hue}}, 90%, 42%)`;
+        const marker = L.circleMarker([p.lat, p.lon], {{
+          radius: size,
+          color,
+          fillColor: color,
+          fillOpacity: 0.38,
+          weight: 1,
+          opacity: 0.8
+        }});
+        marker.bindTooltip(
+          `<b>${{p.name}}</b><br/>Ймовірність: ${{p.percent.toFixed(2)}}%<br/>` +
+          `Підстав: ${{p.value}}`,
+          {{ sticky: true }}
+        );
+        marker.bindPopup(`<b>${{p.name}}</b><br/>Ймовірність: ${{p.percent.toFixed(2)}}%<br/>Підстав: ${{p.value}}`);
         markerLayer.addLayer(marker);
       }}
+      layers["Точки за ймовірністю"] = markerLayer;
+      markerLayer.addTo(map);
     }}
 
     const bounds = L.latLngBounds(points.map(p => [p.lat, p.lon]));
     map.fitBounds(bounds, {{ padding: [24, 24] }});
-
-    const layers = {{
-      "Тепловая карта (интенсивность)": heatLayer
-    }};
-    if (showMarkers) {{
-      layers["Точки по вероятности"] = markerLayer;
-      markerLayer.addTo(map);
-    }}
     L.control.layers({{}}, layers, {{ collapsed: true }}).addTo(map);
 
     const legend = L.control({{ position: 'bottomright' }});
@@ -902,7 +1046,7 @@ def build_heatmap_html(
       div.style.fontSize = '12px';
       div.style.boxShadow = '0 0 8px rgba(0,0,0,0.2)';
       div.innerHTML = `
-        <div style="font-weight:700;margin-bottom:4px;">Скала вероятности</div>
+        <div style="font-weight:700;margin-bottom:4px;">Шкала ймовірності</div>
         <div style="display:flex;align-items:center;gap:4px;margin-top:4px;">
           <span style="display:inline-block;width:26px;height:12px;background:#0000ff;"></span> 0%
         </div>
@@ -918,10 +1062,6 @@ def build_heatmap_html(
         <div style="display:flex;align-items:center;gap:4px;">
           <span style="display:inline-block;width:26px;height:12px;background:#ff0000;"></span> 6%+ 
         </div>
-        <div style="margin-top:6px;">Слой:</div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="
-          width:10px;height:10px;border-radius:50%;background:#000;display:inline-block;
-          opacity:0.7;"></span>Размер/цвет точки = вероятность</div>
       `;
       return div;
     }};
@@ -995,13 +1135,29 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help=(
             "Do not call online geocoding API. "
-            "Uses cached values and county-based fallback points for map."
+            "Uses only built-in municipality coordinates and cached geocode values."
+        ),
+    )
+    parser.add_argument(
+        "--validate-land",
+        action="store_true",
+        help=(
+            "Validate coordinates via reverse geocoding and skip points that land in water or don't match municipality. "
+            "If validation fails, tries online geocoding again."
         ),
     )
     parser.add_argument(
         "--show-markers",
         action="store_true",
         help="Display per-commune markers in addition to heat layer",
+    )
+    parser.add_argument(
+        "--include-zero-points",
+        action="store_true",
+        help=(
+            "Keep municipalities with zero accepted_to_settle in heatmap output "
+            "(by default only municipalities with value > 0 are rendered)."
+        ),
     )
     return parser.parse_args()
 
@@ -1049,6 +1205,8 @@ def main() -> int:
             geocode_delay=max(0.0, args.geocode_delay),
             skip_geocode=args.skip_geocode,
             show_markers=args.show_markers,
+            include_zero=args.include_zero_points,
+            validate_land=args.validate_land,
         )
         print(f"Heatmap: {mapped} points written to {args.map_output}")
         if missing:
