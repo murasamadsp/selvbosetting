@@ -1,86 +1,61 @@
 {
-  "karasjok, finnmark, norway": [
-    69.4718736,
-    25.5111384
+  "oslo, oslo, norway": "not_found",
+  "oslo, norway": "not_found",
+  "trondheim, trøndelag, norway": "not_found",
+  "trondheim, norway": "not_found",
+  "bergen, vestland, norway": "not_found",
+  "bergen, norway": "not_found",
+  "bodø, nordland, norway": "not_found",
+  "bodø, norway": "not_found",
+  "tønsberg, vestfold, norway": [
+    59.3549795,
+    10.2820491
   ],
-  "lebesby, finnmark, norway": [
-    70.6657291,
-    26.8128235
+  "stavanger, rogaland, norway": [
+    58.9699675,
+    5.7318101
   ],
-  "loppa, finnmark, norway": [
-    70.3996274,
-    21.4354053
+  "kristiansand, agder, norway": [
+    58.0856276,
+    7.931858
   ],
-  "alvdal, innlandet, norway": [
-    62.0965119,
-    10.5024921
+  "harstad, troms, norway": [
+    68.799943,
+    16.5440322
   ],
-  "dovre, innlandet, norway": [
-    62.1146265,
-    9.4403671
+  "tromsø, troms, norway": [
+    69.6516345,
+    18.9558585
   ],
-  "etnedal, innlandet, norway": [
-    60.9635472,
-    9.6441632
+  "levanger, trøndelag, norway": "not_found",
+  "levanger, norway": "not_found",
+  "kongsberg, buskerud, norway": "not_found",
+  "kongsberg, norway": "not_found",
+  "narvik, nordland, norway": "not_found",
+  "narvik, norway": "not_found",
+  "ålesund, møre og romsdal, norway": "not_found",
+  "ålesund, norway": "not_found",
+  "sandnes, rogaland, norway": "not_found",
+  "sandnes, norway": "not_found",
+  "bærum, akershus, norway": "not_found",
+  "bærum, norway": "not_found",
+  "ringerike, buskerud, norway": "not_found",
+  "ringerike, norway": "not_found",
+  "arendal, agder, norway": "not_found",
+  "arendal, norway": [
+    58.4267301,
+    8.9469491
   ],
-  "gausdal, innlandet, norway": [
-    61.2640681,
-    9.8532187
+  "alver, vestland, norway": [
+    60.6710754,
+    5.2307679
   ],
-  "lesja, innlandet, norway": [
-    62.1876705,
-    8.6254935
+  "lillestrøm, akershus, norway": [
+    59.9155396,
+    11.2170354
   ],
-  "løten, innlandet, norway": [
-    60.8652754,
-    11.3728513
-  ],
-  "skjåk, innlandet, norway": [
-    61.9349863,
-    7.9145358
-  ],
-  "stor-elvdal, innlandet, norway": [
-    61.5815693,
-    10.9025108
-  ],
-  "sør-aurdal, innlandet, norway": [
-    60.666507,
-    9.6886194
-  ],
-  "øyer, innlandet, norway": [
-    61.3273517,
-    10.5040017
-  ],
-  "aukra, møre og romsdal, norway": [
-    62.939316,
-    6.6786439
-  ],
-  "smøla, møre og romsdal, norway": [
-    63.4896442,
-    7.6998408
-  ],
-  "tingvoll, møre og romsdal, norway": [
-    62.9538733,
-    8.220096
-  ],
-  "beiarn, nordland, norway": [
-    66.8918454,
-    14.665143
-  ],
-  "bindal, nordland, norway": [
-    65.2211102,
-    12.4357521
-  ],
-  "grane, nordland, norway": [
-    65.4429994,
-    13.4083318
-  ],
-  "hattfjelldal, nordland, norway": [
-    65.4999558,
-    14.170607
-  ],
-  "herøy (nordland), nordland, norway": [
-    66.1329116,
-    11.6060658
+  "kristiansund, møre og romsdal, norway": [
+    63.2168194,
+    7.545259
   ]
 }
