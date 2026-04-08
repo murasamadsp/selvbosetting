@@ -29,8 +29,11 @@ from typing import List, Optional
 
 
 URL_DEFAULT = "https://www.imdi.no/bosetting/bosettingstall/nokkeltall-bosetting-2026/"
-NOMINATIM_SEARCH_URL = "https://nominatim.openstreetmap.org/search"
-NOMINATIM_USER_AGENT = "bosetting-probability-script/1.0"
+NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org"
+NOMINATIM_SEARCH_URL = f"{NOMINATIM_BASE_URL}/search"
+NOMINATIM_REVERSE_URL = f"{NOMINATIM_BASE_URL}/reverse"
+OPEN_METEO_GEOCODE_URL = "https://geocoding-api.open-meteo.com/v1/search"
+PROVIDER_USER_AGENT = "bosetting-probability-script/1.0"
 NORWAY_BOUNDS = (57.2, 4.0, 72.2, 32.5)
 WATER_REVERSE_TYPES = {"water", "bay", "fjord", "sea", "ocean", "coastline"}
 STRICT_COORDINATES_PATH_DEFAULT = "kommuner_geocode_cache_2026_online.json"
@@ -789,6 +792,24 @@ def normalize_label(value: str) -> str:
     return re.sub(r"\s+", " ", (value or "").strip().lower())
 
 
+def geocode_cache_key(query: str, provider: str, strict_no_cache: bool = False) -> str:
+    key = query.lower().strip()
+    if strict_no_cache:
+        return f"__strict_no_cache__:{provider}:{key}"
+    return f"{provider}:{key}"
+
+
+def has_boundary_match(value: str, needle: str) -> bool:
+    haystack = normalize_label(value)
+    needle = normalize_label(needle)
+    if not haystack or not needle:
+        return False
+    if haystack == needle:
+        return True
+    pattern = rf"(?:^|[\W_]){re.escape(needle)}(?=[\W_]|$)"
+    return re.search(pattern, haystack) is not None
+
+
 def county_aliases(county: str) -> set[str]:
     normalized = normalize_label(county)
     if not normalized:
@@ -851,7 +872,7 @@ def reverse_geocode_point(
             "namedetails": 1,
         }
     )
-    request_url = f"{NOMINATIM_SEARCH_URL}/reverse?{params}"
+    request_url = f"{NOMINATIM_REVERSE_URL}?{params}"
 
     for retry in range(max_retries + 1):
         wait = delay_seconds * (2 ** max(retry, 1))
@@ -859,7 +880,7 @@ def reverse_geocode_point(
             time.sleep(wait)
         request = urllib.request.Request(
             request_url,
-            headers={"User-Agent": NOMINATIM_USER_AGENT},
+            headers={"User-Agent": PROVIDER_USER_AGENT},
         )
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
@@ -926,7 +947,7 @@ def reverse_matches_municipality(
         if not candidate_norm:
             continue
         has_any_candidate = True
-        if municipality_norm in candidate_norm or candidate_norm in municipality_norm:
+        if has_boundary_match(candidate_norm, municipality_norm):
             return True
     if not has_any_candidate:
         return not strict
@@ -974,24 +995,18 @@ def is_municipality_forward_candidate(
             candidate_norm = normalize_label(candidate)
             if not candidate_norm:
                 continue
-            if municipality_norm == candidate_norm:
-                return True
-            if municipality_norm in candidate_norm or candidate_norm in municipality_norm:
+            if has_boundary_match(candidate_norm, municipality_norm):
                 return True
 
     result_name = normalize_label(str(result.get("name", "")))
     if "," in result_name:
         result_name = normalize_label(result_name.split(",")[0])
-    if municipality_norm == result_name:
-        return True
-    if municipality_norm in result_name or result_name in municipality_norm:
+    if has_boundary_match(result_name, municipality_norm):
         return True
     display_name = normalize_label(str(result.get("display_name", "")))
     if "," in display_name:
         display_name = normalize_label(display_name.split(",")[0])
-    if municipality_norm == display_name:
-        return True
-    if municipality_norm in display_name or display_name in municipality_norm:
+    if has_boundary_match(display_name, municipality_norm):
         return True
 
     if not county:
@@ -1031,6 +1046,13 @@ def is_expected_municipality_coordinate(
     reverse = reverse_geocode_point(lat, lon, geocode_delay)
     if reverse is None:
         return False
+    country = str(reverse.get("address", {}).get("country", "")).lower()
+    country_code = str(reverse.get("address", {}).get("country_code", "")).lower()
+    if country_code:
+        if country_code != "no":
+            return False
+    elif country and "norway" not in country and "norge" not in country:
+        return False
     if is_water_reverse_point(reverse):
         return False
     if not reverse_matches_municipality(reverse, municipality, strict=strict):
@@ -1069,6 +1091,7 @@ def resolve_municipality_coordinate(
     municipality: str,
     county: str,
     geocode_cache: Optional[dict],
+    geocoder_provider: str,
     geocode_delay: float = 1.0,
     validate_land: bool = False,
     strict_land: bool = False,
@@ -1124,7 +1147,11 @@ def resolve_municipality_coordinate(
             query = query.strip()
             if not query:
                 continue
-            cached_point = lookup_cached_point(geocode_cache, query, strict_no_cache=strict_no_cache)
+            cached_point = lookup_cached_point(
+                geocode_cache,
+                geocode_cache_key(query, provider=geocoder_provider, strict_no_cache=strict_no_cache),
+                strict_no_cache=strict_no_cache,
+            )
             if cached_point is None:
                 continue
             accepted = _accept_point(cached_point)
@@ -1136,24 +1163,27 @@ def resolve_municipality_coordinate(
     if county and county.lower() != "ukjent fylke":
         query_variants.append(f"{municipality}, {county}")
     query_variants.append(f"{municipality}, Norway")
-    query_variants = list(dict.from_keys(q for q in query_variants if q))
+    query_variants = list(dict.fromkeys(q for q in query_variants if q))
 
     for query in query_variants:
-        candidate = geocode_with_nominatim(
-            query,
-            geocode_cache,
-            delay_seconds=geocode_delay,
-            municipality=municipality,
-            county=county,
-            force_refresh=validate_land or strict_land or strict_no_cache,
-            strict=strict_land,
-            strict_no_cache=strict_no_cache,
-        )
-        if candidate is None:
-            continue
-        accepted = _accept_point(candidate)
-        if accepted is not None:
-            return accepted
+        provider_chain = (geocoder_provider, "nominatim") if geocoder_provider == "open-meteo" else (geocoder_provider,)
+        for provider in provider_chain:
+            candidate = geocode_with_provider(
+                query,
+                geocode_cache,
+                delay_seconds=geocode_delay,
+                municipality=municipality,
+                county=county,
+                force_refresh=validate_land or strict_land or strict_no_cache,
+                strict=strict_land,
+                strict_no_cache=strict_no_cache,
+                provider=provider,
+            )
+            if candidate is None:
+                continue
+            accepted = _accept_point(candidate)
+            if accepted is not None:
+                return accepted
     return None
 
 
@@ -1231,7 +1261,69 @@ def save_strict_municipality_coords(
         print(f"WARNING: cannot write strict municipality cache {path}: {exc}", file=sys.stderr)
 
 
-def geocode_with_nominatim(
+def is_open_meteo_forward_candidate(
+    result: dict,
+    municipality: str,
+    county: str | None = None,
+    strict: bool = False,
+) -> bool:
+    if not isinstance(result, dict):
+        return False
+
+    municipality_norm = normalize_label(municipality)
+    if not municipality_norm:
+        return not strict
+
+    country_code = str(result.get("country_code", "")).lower()
+    if country_code and country_code not in {"no", "norway", "norge"}:
+        return False
+
+    candidates = (
+        result.get("name"),
+        result.get("admin1"),
+        result.get("admin2"),
+        result.get("admin3"),
+        result.get("admin4"),
+        result.get("county"),
+        result.get("municipality"),
+        result.get("district"),
+        result.get("village"),
+    )
+    for candidate in candidates:
+        candidate_norm = normalize_label(candidate)
+        if not candidate_norm:
+            continue
+        if has_boundary_match(candidate_norm, municipality_norm):
+            return True
+
+    if not county:
+        return not strict
+
+    county_norm = normalize_label(county)
+    if not county_norm:
+        return not strict
+    county_candidates = (
+        result.get("admin1"),
+        result.get("admin2"),
+        result.get("admin3"),
+        result.get("region"),
+        result.get("state"),
+        result.get("county"),
+    )
+    has_county_info = False
+    for candidate in county_candidates:
+        candidate_norm = normalize_label(candidate)
+        if not candidate_norm:
+            continue
+        has_county_info = True
+        if county_matches(county_norm, candidate_norm):
+            return True
+    if has_county_info:
+        return False
+    return True
+
+
+def geocode_with_provider(
     query: str,
     cache: dict,
     delay_seconds: float = 1.0,
@@ -1241,27 +1333,40 @@ def geocode_with_nominatim(
     force_refresh: bool = False,
     strict: bool = False,
     strict_no_cache: bool = False,
+    provider: str = "open-meteo",
 ) -> Optional[tuple[float, float]]:
-    key = query.lower().strip()
-    if strict_no_cache:
-        key = f"__strict_no_cache__:{key}"
+    provider = (provider or "open-meteo").lower()
+    if provider not in {"nominatim", "open-meteo"}:
+        provider = "open-meteo"
+
+    key = geocode_cache_key(query, provider=provider, strict_no_cache=strict_no_cache)
     if not force_refresh:
         cached_point = lookup_cached_point(cache, key, strict_no_cache=strict_no_cache)
         if cached_point is not None:
             return cached_point
 
-    params = urllib.parse.urlencode(
-        {
-            "q": query,
-            "format": "json",
-            "limit": 8,
-            "addressdetails": 0,
-            "countrycodes": "no",
-            "viewbox": "4.0,57.8,32.0,72.2",
-            "bounded": 1,
-        }
-    )
-    request_url = f"{NOMINATIM_SEARCH_URL}?{params}"
+    if provider == "open-meteo":
+        params = urllib.parse.urlencode(
+            {
+                "name": query,
+                "count": 8,
+                "language": "en",
+            }
+        )
+        request_url = f"{OPEN_METEO_GEOCODE_URL}?{params}"
+    else:
+        params = urllib.parse.urlencode(
+            {
+                "q": query,
+                "format": "json",
+                "limit": 8,
+                "addressdetails": 0,
+                "countrycodes": "no",
+                "viewbox": "4.0,57.8,32.0,72.2",
+                "bounded": 1,
+            }
+        )
+        request_url = f"{NOMINATIM_SEARCH_URL}?{params}"
 
     for retry in range(max_retries + 1):
         wait = delay_seconds * (2 ** max(retry, 1))
@@ -1269,13 +1374,13 @@ def geocode_with_nominatim(
             time.sleep(wait)
         request = urllib.request.Request(
             request_url,
-            headers={"User-Agent": NOMINATIM_USER_AGENT},
+            headers={"User-Agent": PROVIDER_USER_AGENT},
         )
         try:
             with urllib.request.urlopen(request, timeout=30) as response:
                 raw = response.read()
                 payload = decode_web_content(raw, response.headers.get_content_charset())
-                items = json.loads(payload)
+                parsed = json.loads(payload)
         except urllib.error.HTTPError as exc:
             if exc.code == 429 and retry < max_retries:
                 retry_after = exc.headers.get("Retry-After") if exc.headers else None
@@ -1299,8 +1404,14 @@ def geocode_with_nominatim(
 
         break
 
+    if provider == "open-meteo":
+        items = parsed.get("results") if isinstance(parsed, dict) else None
+    else:
+        items = parsed
+
     if not isinstance(items, list) or not items:
-        cache[key] = "not_found"
+        if not strict_no_cache:
+            cache[key] = "not_found"
         return None
 
     if municipality:
@@ -1308,7 +1419,19 @@ def geocode_with_nominatim(
     for item in items:
         if not isinstance(item, dict):
             continue
-        if municipality and not is_municipality_forward_candidate(
+
+        if municipality and provider == "open-meteo":
+            if not is_open_meteo_forward_candidate(
+                item,
+                municipality,
+                county=county,
+                strict=strict,
+            ):
+                continue
+            country = str(item.get("country_code", "")).strip().lower()
+            if country and country not in {"no", "norway", "norge"}:
+                continue
+        elif municipality and not is_municipality_forward_candidate(
             item,
             municipality,
             county=county,
@@ -1316,8 +1439,12 @@ def geocode_with_nominatim(
         ):
             continue
 
-        lat = item.get("lat")
-        lon = item.get("lon")
+        if provider == "open-meteo":
+            lat = item.get("latitude")
+            lon = item.get("longitude")
+        else:
+            lat = item.get("lat")
+            lon = item.get("lon")
         if lat is None or lon is None:
             continue
         try:
@@ -1349,6 +1476,7 @@ def build_heatmap_html(
     validate_land: bool = False,
     strict_land: bool = False,
     strict_no_cache: bool = False,
+    geocoder_provider: str = "open-meteo",
     strict_municipality_coords: Optional[dict[str, tuple[float, float]]] = None,
     strict_municipality_verified: Optional[dict[str, tuple[float, float]]] = None,
     include_zero: bool = False,
@@ -1368,6 +1496,7 @@ def build_heatmap_html(
             municipality=municipality,
             county=county,
             geocode_cache=geocode_cache,
+            geocoder_provider=geocoder_provider,
             geocode_delay=max(0.0, geocode_delay),
             validate_land=validate_land,
             strict_land=strict_land,
@@ -1575,7 +1704,13 @@ def parse_args() -> argparse.Namespace:
         "--geocode-delay",
         type=float,
         default=1.1,
-        help="Delay in seconds between geocode requests (Nominatim etiquette)",
+        help="Delay in seconds between geocode requests",
+    )
+    parser.add_argument(
+        "--geocoder-provider",
+        default="open-meteo",
+        choices=["nominatim", "open-meteo"],
+        help="Forward geocoding provider for missed municipalities (default: open-meteo).",
     )
     parser.add_argument(
         "--skip-geocode",
@@ -1651,6 +1786,8 @@ def fetch_html(url: str) -> str:
 
 def main() -> int:
     args = parse_args()
+    if args.strict_land:
+        args.validate_land = True
     if args.strict_no_cache:
         args.validate_land = True
         args.strict_land = True
@@ -1704,6 +1841,7 @@ def main() -> int:
             validate_land=args.validate_land,
             strict_land=args.strict_land,
             strict_no_cache=args.strict_no_cache,
+            geocoder_provider=args.geocoder_provider,
             strict_municipality_coords=strict_municipality_coords,
             strict_municipality_verified=strict_municipality_verified,
         )
