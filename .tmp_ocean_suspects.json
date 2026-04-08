@@ -1,0 +1,1962 @@
+[
+  [
+    "Oslo | Oslo",
+    59.9139,
+    10.7522,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Trondheim",
+    63.4305,
+    10.3951,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Bergen",
+    60.3913,
+    5.3221,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Bodø",
+    67.2804,
+    14.4049,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestfold | Tønsberg",
+    59.2671,
+    10.4076,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Stavanger",
+    58.97,
+    5.7331,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Agder | Kristiansand",
+    58.1599,
+    7.9956,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Harstad",
+    68.7984,
+    16.5415,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Tromsø",
+    69.6496,
+    18.956,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Levanger",
+    63.7468,
+    11.2992,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Kongsberg",
+    59.6627,
+    9.6529,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Narvik",
+    68.4385,
+    17.427,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Ålesund",
+    62.4723,
+    6.1549,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Sandnes",
+    58.8521,
+    5.7351,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Akershus | Bærum",
+    59.9117,
+    10.5252,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Ringerike",
+    60.1707,
+    10.2596,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Verdal",
+    63.7925,
+    11.4843,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Kinn",
+    61.5988,
+    5.0199,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Finnmark | Alta",
+    69.9689,
+    23.2716,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Finnmark | Vadsø",
+    70.0743,
+    29.7509,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Haugesund",
+    59.4138,
+    5.268,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Agder | Grimstad",
+    58.3405,
+    8.5931,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Heim",
+    63.3464,
+    9.27,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Akershus | Nittedal",
+    59.9724,
+    10.8533,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Agder | Lindesnes",
+    58.029,
+    7.461,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Senja",
+    69.0573,
+    17.1163,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Oppdal",
+    62.5933,
+    9.6907,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Steinkjer",
+    64.015,
+    11.4953,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Stjørdal",
+    63.469,
+    10.917,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Namsos",
+    64.4667,
+    11.4961,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Gjøvik",
+    60.7957,
+    10.6914,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Kongsvinger",
+    60.1924,
+    12.0045,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Hareid",
+    62.3731,
+    6.0278,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Alstahaug",
+    65.8806,
+    12.4948,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Østfold | Indre Østfold",
+    59.6133,
+    11.3883,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Øygarden",
+    60.3906,
+    5.0847,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Finnmark | Sør-Varanger",
+    69.7252,
+    30.0469,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Agder | Vennesla",
+    58.2853,
+    7.9606,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Akershus | Frogn",
+    59.6731,
+    10.6671,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Akershus | Nordre Follo",
+    59.7151,
+    10.83,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Finnmark | Hammerfest",
+    70.6634,
+    23.6821,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Vefsn",
+    65.8347,
+    13.1931,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Gjesdal",
+    58.8272,
+    5.9372,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Karmøy",
+    59.2823,
+    5.2989,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Balsfjord",
+    69.2008,
+    19.1698,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Orkland",
+    63.2989,
+    9.8499,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Røros",
+    62.5744,
+    11.3848,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestfold | Larvik",
+    59.053,
+    10.0337,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Kvinnherad",
+    59.875,
+    6.2643,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Sogndal",
+    61.2298,
+    7.0942,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Sunnfjord",
+    61.4526,
+    5.8433,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Voss",
+    60.629,
+    6.4118,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Drammen",
+    59.7441,
+    10.2045,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Telemark | Porsgrunn",
+    59.1427,
+    9.6563,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Akershus | Vestby",
+    59.6039,
+    10.7537,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Modum",
+    59.9796,
+    10.01,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Averøy",
+    63.0492,
+    7.5264,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Volda",
+    62.146,
+    6.0695,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Vestvågøy",
+    68.154,
+    13.959,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Melhus",
+    63.2899,
+    10.2844,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Vestland | Askøy",
+    60.3989,
+    5.1882,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Hol",
+    60.6235,
+    8.3058,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Sigdal",
+    60.0892,
+    9.7506,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Søndre Land",
+    60.6974,
+    10.2461,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Vestre Toten",
+    60.6546,
+    10.5574,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Ørsta",
+    62.1982,
+    6.1288,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Hadsel",
+    68.5596,
+    14.7929,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Telemark | Tinn",
+    59.8741,
+    8.7694,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Lyngen",
+    69.5685,
+    20.1949,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Målselv",
+    69.0252,
+    18.2688,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Troms | Nordreisa",
+    69.7628,
+    21.033,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Buskerud | Nore og Uvdal",
+    60.3602,
+    8.9758,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Gran",
+    60.3767,
+    10.5574,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Nordre Land",
+    60.8801,
+    10.1753,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Ringsaker",
+    60.89,
+    10.7941,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Stange",
+    60.7088,
+    11.1669,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Innlandet | Østre Toten",
+    60.7257,
+    10.7081,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Haram",
+    62.5389,
+    6.2055,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Møre og Romsdal | Sunndal",
+    62.6736,
+    8.5647,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Nordland | Brønnøy",
+    65.4624,
+    12.2095,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Hå",
+    58.6111,
+    5.6508,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Klepp",
+    58.7671,
+    5.6348,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Time",
+    58.7261,
+    5.7711,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Rogaland | Tysvær",
+    59.378,
+    5.5046,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Malvik",
+    63.427,
+    10.6785,
+    "reverse_failed",
+    "HTTP Error 429: Too many requests"
+  ],
+  [
+    "Trøndelag | Åfjord",
+    63.9755,
+    10.2311,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Kvam",
+    60.3846,
+    6.2239,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Stryn",
+    61.905,
+    6.7227,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Lier",
+    59.7954,
+    10.254,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Inderøy",
+    63.8694,
+    11.2803,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Enebakk",
+    59.7403,
+    11.1488,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Nes",
+    60.1202,
+    11.4631,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Gol",
+    60.7007,
+    8.9456,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Rollag",
+    59.9568,
+    9.2536,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Ål",
+    60.6274,
+    8.5665,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Hamar",
+    60.7945,
+    11.0678,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Lillehammer",
+    61.1153,
+    10.4662,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Sør-Odal",
+    60.225,
+    11.6005,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Øystre Slidre",
+    61.1168,
+    9.0271,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Stranda",
+    62.3099,
+    6.9413,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Andøy",
+    69.1421,
+    15.792,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Bø (Nordland)",
+    68.7531,
+    14.4654,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Gildeskål",
+    67.0764,
+    14.7277,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Øksnes",
+    68.723,
+    15.008,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Kragerø",
+    58.8669,
+    9.4083,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Skaun",
+    63.279,
+    10.289,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Bjørnafjorden",
+    60.0635,
+    5.6246,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Gloppen",
+    61.7756,
+    6.2189,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Høyanger",
+    61.2182,
+    6.0726,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Osterøy",
+    60.5126,
+    5.5236,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Stad",
+    62.049,
+    5.2316,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Sveio",
+    59.6195,
+    5.3594,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Nesodden",
+    59.8581,
+    10.6569,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Risør",
+    58.7218,
+    9.2278,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Farsund",
+    58.0944,
+    6.8048,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Kvinesdal",
+    58.304,
+    6.8949,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Meråker",
+    63.4151,
+    11.7458,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Eidsvoll",
+    60.3229,
+    11.2625,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Jevnaker",
+    60.2364,
+    10.3777,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Nordkapp",
+    70.9787,
+    25.7839,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Tana",
+    70.0087,
+    27.0111,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Flekkefjord",
+    58.2962,
+    6.6607,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Nord-Fron",
+    61.5845,
+    9.9534,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Rendalen",
+    61.2553,
+    11.1459,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Sel",
+    61.8652,
+    10.0127,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Tynset",
+    62.2783,
+    10.7743,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Vågå",
+    61.8784,
+    9.1373,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Aure",
+    63.2948,
+    8.3364,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Fjord",
+    62.2513,
+    7.0637,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Giske",
+    62.485,
+    6.0333,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Gjemnes",
+    62.9498,
+    7.6437,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Rauma",
+    62.5676,
+    7.6916,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Surnadal",
+    62.9685,
+    8.7127,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Dønna",
+    66.0616,
+    12.3835,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Evenes",
+    68.5339,
+    16.5452,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Fauske",
+    67.2598,
+    15.392,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Hemnes",
+    66.1944,
+    13.8965,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Lødingen",
+    68.411,
+    16.0006,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Saltdal",
+    66.846,
+    15.384,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Steigen",
+    67.8073,
+    15.053,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Sømna",
+    65.2862,
+    12.1226,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Randaberg",
+    59.0021,
+    5.617,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Fyresdal",
+    59.1823,
+    8.0903,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Notodden",
+    59.5581,
+    9.2643,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Salangen",
+    68.7956,
+    18.2437,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Skjervøy",
+    70.0333,
+    20.9833,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Tjeldsund",
+    68.6582,
+    16.567,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Midtre Gauldal",
+    63.1543,
+    10.6546,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Overhalla",
+    64.4694,
+    11.9656,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Lærdal",
+    61.0996,
+    7.4821,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Tysnes",
+    59.9956,
+    5.5155,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Vaksdal",
+    60.4796,
+    5.7585,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Våler",
+    59.4862,
+    10.8501,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Sortland",
+    68.693,
+    15.4133,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Grong",
+    64.4591,
+    12.3083,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Lom",
+    61.8369,
+    8.5713,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Vang",
+    61.1254,
+    8.5582,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Vik",
+    61.0864,
+    6.5769,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Sauda",
+    59.6475,
+    6.3504,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Suldal",
+    59.4886,
+    6.251,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Flesberg",
+    59.8309,
+    9.5877,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Hemsedal",
+    60.8605,
+    8.5603,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Båtsfjord",
+    70.6342,
+    29.7124,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Nord-Aurdal",
+    60.8889,
+    9.3102,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Ringebu",
+    61.5158,
+    10.0638,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Sør-Fron",
+    61.5592,
+    10.0142,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Vestre Slidre",
+    61.0868,
+    8.9919,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Åmot",
+    61.1267,
+    11.5047,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Hamarøy",
+    68.0613,
+    15.5224,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Lurøy",
+    66.4037,
+    12.8936,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Meløy",
+    66.8601,
+    13.761,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Eigersund",
+    58.4541,
+    6.0002,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Strand",
+    59.0265,
+    6.0462,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Hjartdal",
+    59.5939,
+    8.7889,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Nissedal",
+    59.1895,
+    8.4747,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Seljord",
+    59.3848,
+    8.8308,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Vinje",
+    59.5655,
+    7.973,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Frosta",
+    63.5929,
+    10.694,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Frøya",
+    63.7282,
+    8.652,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Lierne",
+    64.4736,
+    13.8194,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Rindal",
+    63.0436,
+    9.2122,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Selbu",
+    63.2086,
+    11.0364,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Austevoll",
+    60.0862,
+    5.2555,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Årdal",
+    61.2382,
+    7.6936,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Råde",
+    59.3497,
+    10.8373,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Trysil",
+    61.3152,
+    12.2656,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Tokke",
+    59.378,
+    8.067,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestfold | Horten",
+    59.4169,
+    10.4858,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Vegårshei",
+    58.7223,
+    8.7823,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Nesbyen",
+    60.5695,
+    9.1122,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Folldal",
+    62.1329,
+    10.0022,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Os (Hedm.)",
+    62.4831,
+    11.2239,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Tolga",
+    62.4181,
+    11.0382,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Rennebu",
+    62.8298,
+    10.0084,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Lillesand",
+    58.2494,
+    8.3775,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Sirdal",
+    58.7618,
+    6.7169,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Tvedestrand",
+    58.6167,
+    8.9328,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Hurdal",
+    60.4047,
+    11.071,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Nannestad",
+    60.2218,
+    11.092,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Krødsherad",
+    60.1709,
+    9.5797,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Karasjok",
+    69.4698,
+    25.5125,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Lebesby",
+    70.3827,
+    26.85,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Loppa",
+    70.2385,
+    21.3459,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Alvdal",
+    62.1097,
+    10.6328,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Dovre",
+    62.0706,
+    9.686,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Etnedal",
+    60.88,
+    9.6854,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Gausdal",
+    61.2468,
+    10.18,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Lesja",
+    62.2289,
+    8.8691,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Løten",
+    60.8145,
+    11.348,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Skjåk",
+    61.9054,
+    8.2289,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Stor-Elvdal",
+    61.3939,
+    11.0549,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Sør-Aurdal",
+    60.6358,
+    9.7932,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Øyer",
+    61.2615,
+    10.4212,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Aukra",
+    62.866,
+    6.5742,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Smøla",
+    63.3663,
+    7.7861,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Tingvoll",
+    63.0285,
+    8.2039,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Beiarn",
+    67.0091,
+    15.5459,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Bindal",
+    65.0646,
+    12.3239,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Grane",
+    65.4437,
+    13.5263,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Hattfjelldal",
+    65.5677,
+    14.0606,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Nordland | Herøy (Nordland)",
+    66.0167,
+    12.3028,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Bjerkreim",
+    58.6612,
+    6.041,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Hjelmeland",
+    59.2263,
+    6.1564,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Drangedal",
+    59.0917,
+    9.07,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Kvæfjord",
+    68.7802,
+    16.5371,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Kåfjord",
+    69.3997,
+    20.4744,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Lavangen",
+    68.7461,
+    18.0044,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Storfjord",
+    69.2006,
+    19.9048,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Holtålen",
+    62.802,
+    11.283,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Indre Fosen",
+    63.5843,
+    10.223,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Namsskogan",
+    64.9326,
+    13.1646,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Nærøysund",
+    64.8695,
+    11.4028,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Osen",
+    64.4244,
+    10.7032,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestfold | Færder",
+    59.2127,
+    10.4065,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestfold | Holmestrand",
+    59.4886,
+    10.3147,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Aurland",
+    60.905,
+    7.185,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Austrheim",
+    60.7614,
+    4.956,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Fjaler",
+    61.3685,
+    5.7124,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Hyllestad",
+    61.2177,
+    5.3032,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Masfjorden",
+    60.8316,
+    5.3927,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Solund",
+    61.07,
+    4.8379,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Stord",
+    59.7791,
+    5.4915,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Aremark",
+    59.2319,
+    11.687,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Sarpsborg",
+    59.2833,
+    11.1097,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Skiptvet",
+    59.5683,
+    11.253,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Lund",
+    58.3595,
+    6.0525,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Hvaler",
+    59.0338,
+    10.9997,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Troms | Dyrøy",
+    69.1112,
+    18.126,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Flå",
+    60.3766,
+    9.4984,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Hægebostad",
+    58.4828,
+    7.1972,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Iveland",
+    58.4459,
+    8.0527,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Valle",
+    59.2021,
+    7.5306,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Åmli",
+    58.8213,
+    8.4831,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Åseral",
+    58.4909,
+    7.3695,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Gjerdrum",
+    60.0757,
+    11.0287,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Buskerud | Hole",
+    60.1059,
+    10.2497,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Finnmark | Porsanger",
+    70.0589,
+    25.0806,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Sande (Møre og Romsdal)",
+    62.2119,
+    5.7738,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Møre og Romsdal | Vanylven",
+    62.1488,
+    5.6985,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Bokn",
+    59.2341,
+    5.4464,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Rogaland | Sokndal",
+    58.3399,
+    6.2367,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Trøndelag | Flatanger",
+    64.486,
+    10.97,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Eidfjord",
+    60.4666,
+    7.07,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Samnanger",
+    60.3966,
+    5.7762,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Rakkestad",
+    59.3782,
+    11.3458,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Fitjar",
+    59.8283,
+    5.3113,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Marker",
+    59.4164,
+    11.6308,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Birkenes",
+    58.3452,
+    8.2305,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Bykle",
+    59.5684,
+    7.3828,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Evje og Hornnes",
+    58.5865,
+    7.8033,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Agder | Lyngdal",
+    58.1408,
+    7.073,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Lørenskog",
+    59.8866,
+    10.9635,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Akershus | Ås",
+    59.666,
+    10.7895,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Nord-Odal",
+    60.3896,
+    11.5616,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Våler (Innlandet)",
+    60.6432,
+    11.9326,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Innlandet | Åsnes",
+    60.7433,
+    11.8745,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Telemark | Midt-Telemark",
+    59.3857,
+    9.0821,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Ullensvang",
+    60.1308,
+    6.6463,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Vestland | Ulvik",
+    60.5668,
+    6.9193,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ],
+  [
+    "Østfold | Fredrikstad",
+    59.2181,
+    10.9298,
+    "reverse_failed",
+    "<urlopen error [Errno 8] nodename nor servname provided, or not known>"
+  ]
+]

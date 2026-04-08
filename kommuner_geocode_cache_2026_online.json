@@ -1,70 +1,16 @@
 {
-  "oslo, oslo, norway": "not_found",
-  "oslo, norway": "not_found",
-  "trondheim, trøndelag, norway": "not_found",
-  "trondheim, norway": "not_found",
-  "bergen, vestland, norway": "not_found",
-  "bergen, norway": "not_found",
-  "bodø, nordland, norway": "not_found",
-  "bodø, norway": "not_found",
-  "tønsberg, vestfold, norway": [
-    59.3549795,
-    10.2820491
-  ],
-  "stavanger, rogaland, norway": [
-    58.9699675,
-    5.7318101
-  ],
-  "kristiansand, agder, norway": [
-    58.0856276,
-    7.931858
-  ],
-  "harstad, troms, norway": [
-    68.799943,
-    16.5440322
-  ],
-  "tromsø, troms, norway": [
-    69.6516345,
-    18.9558585
-  ],
-  "levanger, trøndelag, norway": "not_found",
-  "levanger, norway": "not_found",
-  "kongsberg, buskerud, norway": "not_found",
-  "kongsberg, norway": "not_found",
-  "narvik, nordland, norway": "not_found",
-  "narvik, norway": "not_found",
-  "ålesund, møre og romsdal, norway": "not_found",
-  "ålesund, norway": "not_found",
-  "sandnes, rogaland, norway": "not_found",
-  "sandnes, norway": "not_found",
-  "bærum, akershus, norway": "not_found",
-  "bærum, norway": "not_found",
-  "ringerike, buskerud, norway": "not_found",
-  "ringerike, norway": "not_found",
-  "arendal, agder, norway": "not_found",
-  "arendal, norway": [
-    58.4267301,
-    8.9469491
-  ],
-  "alver, vestland, norway": [
-    60.6710754,
-    5.2307679
-  ],
-  "lillestrøm, akershus, norway": [
-    59.9155396,
-    11.2170354
-  ],
-  "kristiansund, møre og romsdal, norway": [
-    63.2168194,
-    7.545259
-  ],
   "oslo": "not_found",
   "oslo, oslo": "not_found",
+  "oslo, norway": "not_found",
   "trondheim": "not_found",
   "trondheim, trøndelag": "not_found",
+  "trondheim, norway": "not_found",
   "bergen": "not_found",
   "bergen, vestland": "not_found",
-  "bodø": [
+  "bergen, norway": "not_found",
+  "bodø": "not_found",
+  "bodø, nordland": "not_found",
+  "bodø, norway": [
     67.2844313,
     14.3817503
   ],
@@ -76,17 +22,19 @@
     58.9699675,
     5.7318101
   ],
-  "kristiansand": "not_found",
-  "kristiansand, agder": "not_found",
-  "kristiansand, norway": "not_found",
-  "harstad": "not_found",
-  "harstad, troms": "not_found",
-  "harstad, norway": "not_found",
-  "tromsø": "not_found",
-  "tromsø, troms": "not_found",
-  "tromsø, norway": "not_found",
-  "levanger": "not_found",
-  "levanger, trøndelag": [
+  "kristiansand": [
+    58.0856276,
+    7.931858
+  ],
+  "harstad": [
+    68.799943,
+    16.5440322
+  ],
+  "tromsø": [
+    69.6516345,
+    18.9558585
+  ],
+  "levanger": [
     63.6964518,
     11.2238804
   ],
@@ -94,67 +42,83 @@
     59.5945501,
     9.6708601
   ],
-  "narvik": "not_found",
-  "narvik, nordland": "not_found",
-  "ålesund": "not_found",
-  "ålesund, møre og romsdal": "not_found",
-  "sandnes": "not_found",
-  "sandnes, rogaland": "not_found",
-  "bærum": "not_found",
-  "bærum, akershus": "not_found",
-  "ringerike": "not_found",
-  "ringerike, buskerud": [
+  "narvik": [
+    68.4383796,
+    17.4271978
+  ],
+  "ålesund": [
+    62.4802363,
+    6.5550739
+  ],
+  "sandnes": [
+    58.983132,
+    6.394641
+  ],
+  "bærum": [
+    59.9289639,
+    10.4997108
+  ],
+  "ringerike": [
     60.3274063,
     10.0217635
   ],
-  "arendal": "not_found",
-  "arendal, agder": "not_found",
-  "alver": "not_found",
-  "alver, vestland": "not_found",
-  "alver, norway": "not_found",
-  "lillestrøm": "not_found",
-  "lillestrøm, akershus": "not_found",
-  "lillestrøm, norway": "not_found",
-  "kristiansund": "not_found",
-  "kristiansund, møre og romsdal": [
+  "arendal": [
+    58.4267301,
+    8.9469491
+  ],
+  "alver": [
+    60.6710754,
+    5.2307679
+  ],
+  "lillestrøm": [
+    59.9155396,
+    11.2170354
+  ],
+  "kristiansund": [
     63.2168194,
     7.545259
   ],
-  "verdal": "not_found",
-  "verdal, trøndelag": "not_found",
-  "verdal, norway": "not_found",
-  "kinn": "not_found",
-  "kinn, vestland": "not_found",
-  "kinn, norway": "not_found",
-  "alta": "not_found",
-  "alta, finnmark": "not_found",
-  "alta, norway": "not_found",
-  "vadsø": "not_found",
-  "vadsø, finnmark": "not_found",
-  "vadsø, norway": "not_found",
-  "haugesund": "not_found",
-  "haugesund, rogaland": "not_found",
-  "haugesund, norway": "not_found",
-  "grimstad": "not_found",
-  "grimstad, agder": "not_found",
-  "grimstad, norway": "not_found",
-  "heim": "not_found",
-  "heim, trøndelag": "not_found",
-  "heim, norway": [
+  "verdal": [
+    63.7862257,
+    11.920335
+  ],
+  "kinn": [
+    61.6204779,
+    4.8947131
+  ],
+  "alta": [
+    69.9666046,
+    23.2733282
+  ],
+  "vadsø": [
+    70.2267199,
+    29.7828009
+  ],
+  "haugesund": [
+    59.4682479,
+    5.0827612
+  ],
+  "grimstad": [
+    58.2839967,
+    8.7128291
+  ],
+  "heim": [
     63.2470498,
     9.0903952
   ],
-  "nittedal": "not_found",
-  "nittedal, akershus": "not_found",
-  "nittedal, norway": "not_found",
-  "lindesnes": "not_found",
-  "lindesnes, agder": "not_found",
-  "lindesnes, norway": "not_found",
-  "senja": "not_found",
-  "senja, troms": "not_found",
-  "senja, norway": "not_found",
-  "oppdal": "not_found",
-  "oppdal, trøndelag": [
+  "nittedal": [
+    60.0804543,
+    10.8566109
+  ],
+  "lindesnes": [
+    58.1161312,
+    7.3831956
+  ],
+  "senja": [
+    69.3039795,
+    17.4590833
+  ],
+  "oppdal": [
     62.5351785,
     9.6233763
   ],
@@ -166,50 +130,59 @@
     63.4627028,
     11.1344723
   ],
-  "namsos": "not_found",
-  "namsos, trøndelag": "not_found",
-  "namsos, norway": "not_found",
-  "gjøvik": "not_found",
-  "gjøvik, innlandet": "not_found",
-  "gjøvik, norway": "not_found",
-  "kongsvinger": "not_found",
-  "kongsvinger, innlandet": "not_found",
-  "kongsvinger, norway": "not_found",
-  "hareid": "not_found",
-  "hareid, møre og romsdal": "not_found",
-  "hareid, norway": "not_found",
-  "alstahaug": "not_found",
-  "alstahaug, nordland": "not_found",
-  "alstahaug, norway": "not_found",
-  "indre østfold": "not_found",
-  "indre østfold, østfold": "not_found",
-  "indre østfold, norway": "not_found",
-  "øygarden": "not_found",
-  "øygarden, vestland": "not_found",
-  "øygarden, norway": "not_found",
-  "sør-varanger": "not_found",
-  "sør-varanger, finnmark": "not_found",
-  "sør-varanger, norway": "not_found",
-  "vennesla": "not_found",
-  "vennesla, agder": "not_found",
-  "vennesla, norway": "not_found",
-  "frogn": "not_found",
-  "frogn, akershus": "not_found",
-  "frogn, norway": [
+  "namsos": [
+    64.4666372,
+    11.3345047
+  ],
+  "gjøvik": [
+    60.8721617,
+    10.5038864
+  ],
+  "kongsvinger": [
+    60.1899109,
+    12.2160367
+  ],
+  "hareid": [
+    62.3598311,
+    6.0305106
+  ],
+  "alstahaug": [
+    65.8674223,
+    12.4317804
+  ],
+  "indre østfold": [
+    59.6102005,
+    11.1832941
+  ],
+  "øygarden": [
+    60.4267846,
+    4.7265289
+  ],
+  "sør-varanger": [
+    69.5375661,
+    29.7261372
+  ],
+  "vennesla": [
+    58.3398618,
+    7.7707903
+  ],
+  "frogn": [
     59.6957457,
     10.6459855
   ],
-  "nordre follo": "not_found",
-  "nordre follo, akershus": "not_found",
-  "nordre follo, norway": "not_found",
-  "hammerfest": "not_found",
-  "hammerfest, finnmark": "not_found",
-  "hammerfest, norway": "not_found",
-  "vefsn": "not_found",
-  "vefsn, nordland": "not_found",
-  "vefsn, norway": "not_found",
-  "gjesdal": "not_found",
-  "gjesdal, rogaland": [
+  "nordre follo": [
+    59.7289761,
+    10.8928692
+  ],
+  "hammerfest": [
+    70.6413392,
+    23.8360801
+  ],
+  "vefsn": [
+    65.820747,
+    13.1786356
+  ],
+  "gjesdal": [
     58.8312089,
     6.2770851
   ],
@@ -725,8 +698,7 @@
     61.7142578,
     8.4258977
   ],
-  "vang": "not_found",
-  "vang, innlandet": [
+  "vang": [
     61.1922086,
     8.4695189
   ],
@@ -1220,121 +1192,5 @@
   "fredrikstad": [
     59.1862013,
     10.8680241
-  ],
-  "gran, innlandet": [
-    60.4385394,
-    10.4298617
-  ],
-  "gran, norway": [
-    60.4385394,
-    10.4298617
-  ],
-  "hå, rogaland": [
-    58.5184078,
-    5.5674367
-  ],
-  "hå, norway": [
-    58.5184078,
-    5.5674367
-  ],
-  "time, rogaland": [
-    58.7074226,
-    5.7512222
-  ],
-  "time, norway": [
-    58.7074226,
-    5.7512222
-  ],
-  "stad, vestland": [
-    62.1132841,
-    5.1381909
-  ],
-  "stad, norway": [
-    62.1132841,
-    5.1381909
-  ],
-  "aure, møre og romsdal": [
-    63.2802049,
-    8.5111891
-  ],
-  "aure, norway": [
-    63.2802049,
-    8.5111891
-  ],
-  "steigen, nordland": [
-    67.8535836,
-    14.8017083
-  ],
-  "steigen, norway": [
-    67.8535836,
-    14.8017083
-  ],
-  "lom, innlandet": [
-    61.7142578,
-    8.4258977
-  ],
-  "lom, norway": [
-    61.7142578,
-    8.4258977
-  ],
-  "grane, nordland": [
-    65.4429994,
-    13.4083318
-  ],
-  "grane, norway": [
-    65.4429994,
-    13.4083318
-  ],
-  "herøy": [
-    62.4390366,
-    5.2930882
-  ],
-  "herøy, nordland": [
-    66.1329116,
-    11.6060658
-  ],
-  "herøy, norway": [
-    62.4390366,
-    5.2930882
-  ],
-  "lund, rogaland": [
-    58.4640206,
-    6.4572869
-  ],
-  "lund, norway": [
-    58.4640206,
-    6.4572869
-  ],
-  "valle, agder": [
-    59.1690716,
-    7.4247694
-  ],
-  "valle, norway": [
-    59.1690716,
-    7.4247694
-  ],
-  "sande": [
-    62.2939875,
-    5.3178611
-  ],
-  "sande, møre og romsdal": [
-    62.2939875,
-    5.3178611
-  ],
-  "sande, norway": [
-    62.2939875,
-    5.3178611
-  ],
-  "halden": [
-    59.0680555,
-    11.537191
-  ],
-  "halden, østfold": [
-    59.0680555,
-    11.537191
-  ],
-  "halden, norway": [
-    59.0680555,
-    11.537191
   ]
 }

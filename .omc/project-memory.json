@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1773700329934,
+  "lastScanned": 1775643744653,
   "projectRoot": "/Users/murasama/Projects/selvbosetting",
   "techStack": {
     "languages": [
@@ -43,23 +43,33 @@
   },
   "customNotes": [],
   "directoryMap": {
+    "__pycache__": {
+      "path": "__pycache__",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1775643744637,
+      "keyFiles": [
+        "bosetting_probability_2026.cpython-314.pyc"
+      ]
+    },
     "docs": {
       "path": "docs",
       "purpose": "Documentation",
-      "fileCount": 4,
-      "lastAccessed": 1773700329856,
+      "fileCount": 6,
+      "lastAccessed": 1775643744637,
       "keyFiles": [
+        "AGENTS.md",
         "daily.md",
         "glossary.md",
         "index.md",
-        "start.md"
+        "kommuner_heatmap_2026_all.html"
       ]
     },
     "site": {
       "path": "site",
       "purpose": null,
       "fileCount": 4,
-      "lastAccessed": 1773700329860,
+      "lastAccessed": 1775643744638,
       "keyFiles": [
         "404.html",
         "index.html",
@@ -71,10 +81,17 @@
       "path": "site/assets",
       "purpose": "Static assets",
       "fileCount": 0,
-      "lastAccessed": 1773700329860,
+      "lastAccessed": 1775643744639,
       "keyFiles": []
     }
   },
-  "hotPaths": [],
+  "hotPaths": [
+    {
+      "path": "lyst_imdi.md",
+      "accessCount": 2,
+      "lastAccessed": 1775644775873,
+      "type": "file"
+    }
+  ],
   "userDirectives": []
 }

@@ -33,6 +33,7 @@ NOMINATIM_SEARCH_URL = "https://nominatim.openstreetmap.org/search"
 NOMINATIM_USER_AGENT = "bosetting-probability-script/1.0"
 NORWAY_BOUNDS = (57.2, 4.0, 72.2, 32.5)
 WATER_REVERSE_TYPES = {"water", "bay", "fjord", "sea", "ocean", "coastline"}
+STRICT_COORDINATES_PATH_DEFAULT = "kommuner_geocode_cache_2026_online.json"
 
 # Real administrative-center coordinates for every Norwegian municipality (2024 borders).
 # Key = municipality name as it appears in IMDi tables.
@@ -65,6 +66,7 @@ MUNICIPALITY_COORDS: dict[str, tuple[float, float]] = {
     "Råde": (59.3497, 10.8373),
     "Aremark": (59.2319, 11.6870),
     "Sarpsborg": (59.2833, 11.1097),
+    "Halden": (59.1265, 11.3871),
     "Skiptvet": (59.5683, 11.2530),
     "Hvaler": (59.0338, 10.9997),
     "Rakkestad": (59.3782, 11.3458),
@@ -372,6 +374,76 @@ def clean_text(value: str) -> str:
     return value
 
 
+def sanitize_municipality_name(value: str) -> str:
+    value = clean_text(value)
+    if not value:
+        return ""
+    value = re.sub(r"\s*\([^)]+\)\s*$", "", value).strip()
+    value = re.sub(r"\s*[†*]\s*$", "", value)
+    value = value.strip(" -–—,:;.")
+    value = re.sub(r"\s+", " ", value)
+    return value.strip()
+
+
+def load_reference_municipality_names(path: str | None = None) -> set[str]:
+    names = set(MUNICIPALITY_COORDS.keys())
+    if not path:
+        return names
+    try:
+        with open(path, "r", encoding="utf-8") as cache_file:
+            data = json.load(cache_file)
+        if isinstance(data, dict):
+            names.update(
+                key
+                for key, value in data.items()
+                if isinstance(key, str) and key.strip() and isinstance(value, (list, tuple))
+            )
+    except FileNotFoundError:
+        pass
+    except Exception as exc:
+        print(
+            f"WARNING: cannot load municipality reference list from {path}: {exc}",
+            file=sys.stderr,
+        )
+    return names
+
+
+def is_reference_municipality(name: str, reference_names: Optional[set[str]] = None) -> bool:
+    if reference_names is None:
+        return True
+    if not name:
+        return False
+
+    direct = sanitize_municipality_name(name)
+    if direct in reference_names:
+        return True
+
+    if not reference_names:
+        return True
+
+    direct_norm = normalize_label(direct)
+    normalized_reference = {normalize_label(m) for m in reference_names}
+    if direct_norm in normalized_reference:
+        return True
+
+    if not direct_norm:
+        return False
+
+    if reference_names:
+        for candidate in (
+            sanitize_municipality_name(direct.split("-", 1)[0]),
+            sanitize_municipality_name(direct.split(" - ", 1)[0]),
+            sanitize_municipality_name(direct.split("–", 1)[0]),
+            sanitize_municipality_name(direct.split("—", 1)[0]),
+        ):
+            if not candidate:
+                continue
+            if candidate in reference_names or normalize_label(candidate) in normalized_reference:
+                return True
+
+    return False
+
+
 def parse_int_cell(value: str) -> Optional[int]:
     """
     Parse integer from a table cell.
@@ -380,14 +452,10 @@ def parse_int_cell(value: str) -> Optional[int]:
     text = clean_text(value).strip().lower()
     if text in {"", "-", ":", ":", "avventer vedtak", "avventer", "n/a", "na"}:
         return None
-    # remove trailing/leading non-digit characters (just in case)
-    if re.fullmatch(r"[0-9]+", text):
-        return int(text)
-    # Try extracting first integer token, for edge cases.
-    number_match = re.search(r"\d+", text)
-    if number_match is not None:
-        return int(number_match.group(0))
-    return None
+    number_text = re.sub(r"[^0-9]", "", text)
+    if not number_text:
+        return None
+    return int(number_text)
 
 
 def repair_mojibake(value: str) -> str:
@@ -513,13 +581,19 @@ def decode_web_content(raw: bytes, charset: Optional[str]) -> str:
     return raw.decode("latin1", errors="replace")
 
 
-def parse_tables(html_body: str, include_zero: bool = False) -> List[Record]:
+def parse_tables(
+    html_body: str,
+    include_zero: bool = False,
+    reference_municipality_names: Optional[set[str]] = None,
+    require_reference_match: bool = False,
+) -> List[Record]:
     table_pattern = re.compile(r"(?is)<table\b[^>]*>(.*?)</table>")
     row_pattern = re.compile(r"(?is)<tr\b[^>]*>(.*?)</tr>")
     cell_pattern = re.compile(r"(?is)<t[hd]\b[^>]*>(.*?)</t[hd]>")
 
     records: List[Record] = []
     seen: dict = {}
+    suspicious_rows: List[str] = []
 
     for table_match in table_pattern.finditer(html_body):
         table_html = table_match.group(0)
@@ -562,6 +636,15 @@ def parse_tables(html_body: str, include_zero: bool = False) -> List[Record]:
             kommune_name = clean_text(cells[kommune_idx])
             if not kommune_name or kommune_name == "-":
                 continue
+            kommune_name = sanitize_municipality_name(kommune_name)
+            if not kommune_name:
+                continue
+            if require_reference_match and not is_reference_municipality(
+                kommune_name,
+                reference_names=reference_municipality_names,
+            ):
+                county_label = county_name or "Ukjent fylke"
+                suspicious_rows.append(f"{county_label} | {kommune_name}")
 
             value = parse_int_cell(cells[target_idx])
             if value is None:
@@ -586,6 +669,20 @@ def parse_tables(html_body: str, include_zero: bool = False) -> List[Record]:
         Record(county=k[0], municipality=k[1], accepted_to_settle=v)
         for k, v in seen.items()
     ]
+
+    if suspicious_rows:
+        print(
+            f"WARNING: {len(suspicious_rows)} rows look unusual compared to the reference municipality set.",
+            file=sys.stderr,
+        )
+        for item in suspicious_rows[:12]:
+            print(f"  - {item}", file=sys.stderr)
+        if len(suspicious_rows) > 12:
+            print(
+                f"  ... and {len(suspicious_rows) - 12} more",
+                file=sys.stderr,
+            )
+
     return deduped
 
 
@@ -629,12 +726,16 @@ def parse_municipality_query(label: str) -> tuple[str, str]:
     return county.strip(), municipality.strip()
 
 
-def lookup_municipality_coords(municipality: str) -> Optional[tuple[float, float]]:
-    """Look up real coordinates from the built-in dictionary."""
-    coords = MUNICIPALITY_COORDS.get(municipality)
+def lookup_municipality_coords(
+    municipality: str,
+    municipality_coords: Optional[dict[str, tuple[float, float]]] = None,
+) -> Optional[tuple[float, float]]:
+    """Look up real coordinates from the selected dictionary."""
+    source = municipality_coords if municipality_coords is not None else MUNICIPALITY_COORDS
+    coords = source.get(municipality)
     if coords is not None:
         return coords
-    for key, val in MUNICIPALITY_COORDS.items():
+    for key, val in source.items():
         if key.lower() == municipality.lower():
             return val
         if key.startswith(municipality) or municipality.startswith(key):
@@ -642,8 +743,96 @@ def lookup_municipality_coords(municipality: str) -> Optional[tuple[float, float
     return None
 
 
+def lookup_cached_point(
+    cache: dict | None,
+    key: str,
+    strict_no_cache: bool = False,
+) -> Optional[tuple[float, float]]:
+    if not isinstance(cache, dict):
+        return None
+    normalized_key = (key or "").strip().lower()
+    if not normalized_key:
+        return None
+
+    cached = cache.get(normalized_key)
+    if not strict_no_cache and cached == "not_found":
+        return None
+    if isinstance(cached, list) and len(cached) == 2:
+        try:
+            return float(cached[0]), float(cached[1])
+        except (TypeError, ValueError):
+            pass
+
+    for cache_key, value in cache.items():
+        if not isinstance(cache_key, str):
+            continue
+        cache_key_norm = cache_key.lower().strip()
+        if cache_key_norm == normalized_key:
+            if not strict_no_cache and value == "not_found":
+                return None
+        if (
+            cache_key_norm == normalized_key
+            or cache_key_norm.startswith(normalized_key)
+            or normalized_key.startswith(cache_key_norm)
+        ):
+            if not strict_no_cache and value == "not_found":
+                continue
+            if isinstance(value, list) and len(value) == 2:
+                try:
+                    return float(value[0]), float(value[1])
+                except (TypeError, ValueError):
+                    continue
+    return None
+
+
 def normalize_label(value: str) -> str:
     return re.sub(r"\s+", " ", (value or "").strip().lower())
+
+
+def county_aliases(county: str) -> set[str]:
+    normalized = normalize_label(county)
+    if not normalized:
+        return set()
+
+    aliases = {normalized}
+    merged = {
+        "akershus": {"akershus", "viken"},
+        "buskerud": {"buskerud", "viken"},
+        "østfold": {"østfold", "viken"},
+        "vestfold": {"vestfold", "telemark", "vestfold og telemark"},
+        "telemark": {"telemark", "vestfold", "vestfold og telemark"},
+        "aust-agder": {"aust-agder", "agder"},
+        "vest-agder": {"vest-agder", "agder"},
+        "troms": {"troms", "troms og finnmark"},
+        "finnmark": {"finnmark", "troms og finnmark"},
+        "sør-trøndelag": {"sør-trøndelag", "trøndelag"},
+        "nord-trøndelag": {"nord-trøndelag", "trøndelag"},
+    }
+    if normalized in merged:
+        aliases.update(merged[normalized])
+
+    aliases.update(
+        {
+            normalized.replace("fylke", "").strip(),
+            normalized.replace("-", " "),
+            normalized.replace(" ", "-"),
+        }
+    )
+    aliases.discard("")
+    return aliases
+
+
+def county_matches(expected_county: str, candidate_county: str) -> bool:
+    expected = {normalize_label(v) for v in county_aliases(expected_county)}
+    candidate_variants = {normalize_label(candidate_county)}
+    candidate_variants.add(candidate_variants.copy().pop().replace("-", " "))
+    candidate_variants.add(candidate_variants.copy().pop().replace(" ", "-"))
+    candidate_variants.discard("")
+    return any(
+        e == c or e in c or c in e
+        for e in expected
+        for c in candidate_variants
+    )
 
 
 def reverse_geocode_point(
@@ -665,8 +854,9 @@ def reverse_geocode_point(
     request_url = f"{NOMINATIM_SEARCH_URL}/reverse?{params}"
 
     for retry in range(max_retries + 1):
-        if retry > 0:
-            time.sleep(delay_seconds * (retry + 1) * 2)
+        wait = delay_seconds * (2 ** max(retry, 1))
+        if wait > 0:
+            time.sleep(wait)
         request = urllib.request.Request(
             request_url,
             headers={"User-Agent": NOMINATIM_USER_AGENT},
@@ -678,7 +868,7 @@ def reverse_geocode_point(
         except urllib.error.HTTPError as exc:
             if exc.code == 429 and retry < max_retries:
                 retry_after = exc.headers.get("Retry-After") if exc.headers else None
-                wait = delay_seconds * (retry + 2)
+                wait = delay_seconds * (2 ** (retry + 1))
                 if retry_after:
                     try:
                         wait = max(wait, int(retry_after))
@@ -707,7 +897,11 @@ def is_water_reverse_point(reverse_data: Optional[dict]) -> bool:
     return typ in WATER_REVERSE_TYPES
 
 
-def reverse_matches_municipality(reverse_data: Optional[dict], municipality: str) -> bool:
+def reverse_matches_municipality(
+    reverse_data: Optional[dict],
+    municipality: str,
+    strict: bool = False,
+) -> bool:
     if not isinstance(reverse_data, dict):
         return True
     municipality_norm = normalize_label(municipality)
@@ -735,8 +929,140 @@ def reverse_matches_municipality(reverse_data: Optional[dict], municipality: str
         if municipality_norm in candidate_norm or candidate_norm in municipality_norm:
             return True
     if not has_any_candidate:
-        return True
+        return not strict
     return False
+
+
+def is_municipality_forward_candidate(
+    result: dict,
+    municipality: str,
+    county: str | None = None,
+    strict: bool = False,
+) -> bool:
+    if not isinstance(result, dict):
+        return False
+
+    cls = str(result.get("class", "")).lower()
+    typ = str(result.get("type", "")).lower()
+    if cls == "boundary":
+        if typ and typ not in {"administrative", "municipality"}:
+            return False
+    elif cls == "place":
+        if typ and typ not in {"municipality", "city", "town", "village", "hamlet", "suburb", "borough"}:
+            return False
+    elif cls:
+        return False
+
+    municipality_norm = normalize_label(municipality)
+    if not municipality_norm:
+        return not strict
+
+    address = result.get("address")
+    if not isinstance(address, dict):
+        address = {}
+    if isinstance(address, dict):
+        candidates = (
+            address.get("municipality"),
+            address.get("city"),
+            address.get("town"),
+            address.get("village"),
+            address.get("hamlet"),
+            address.get("suburb"),
+            address.get("borough"),
+        )
+        for candidate in candidates:
+            candidate_norm = normalize_label(candidate)
+            if not candidate_norm:
+                continue
+            if municipality_norm == candidate_norm:
+                return True
+            if municipality_norm in candidate_norm or candidate_norm in municipality_norm:
+                return True
+
+    result_name = normalize_label(str(result.get("name", "")))
+    if "," in result_name:
+        result_name = normalize_label(result_name.split(",")[0])
+    if municipality_norm == result_name:
+        return True
+    if municipality_norm in result_name or result_name in municipality_norm:
+        return True
+    display_name = normalize_label(str(result.get("display_name", "")))
+    if "," in display_name:
+        display_name = normalize_label(display_name.split(",")[0])
+    if municipality_norm == display_name:
+        return True
+    if municipality_norm in display_name or display_name in municipality_norm:
+        return True
+
+    if not county:
+        return not strict
+
+    county_norm = normalize_label(county)
+    if not county_norm:
+        return not strict
+    county_candidates = (
+        address.get("state"),
+        address.get("state_district"),
+        address.get("region"),
+        address.get("county"),
+        address.get("province"),
+    )
+    has_county_info = False
+    for candidate in county_candidates:
+        candidate_norm = normalize_label(candidate)
+        if not candidate_norm:
+            continue
+        has_county_info = True
+        if county_matches(county_norm, candidate_norm):
+            return True
+    if has_county_info:
+        return False
+    return True
+
+
+def is_expected_municipality_coordinate(
+    lat: float,
+    lon: float,
+    municipality: str,
+    county: str,
+    geocode_delay: float,
+    strict: bool = False,
+) -> bool:
+    reverse = reverse_geocode_point(lat, lon, geocode_delay)
+    if reverse is None:
+        return False
+    if is_water_reverse_point(reverse):
+        return False
+    if not reverse_matches_municipality(reverse, municipality, strict=strict):
+        return False
+
+    normalized_county = normalize_label(county)
+    if not normalized_county or normalized_county == "ukjent fylke":
+        return True
+
+    address = reverse.get("address") or {}
+    if not isinstance(address, dict):
+        return not strict
+
+    county_candidates = (
+        address.get("county"),
+        address.get("state"),
+        address.get("state_district"),
+        address.get("region"),
+        address.get("province"),
+    )
+    has_county_info = False
+    for candidate in county_candidates:
+        candidate_norm = normalize_label(candidate)
+        if not candidate_norm:
+            continue
+        has_county_info = True
+        if county_matches(normalized_county, candidate_norm):
+            return True
+
+    if has_county_info:
+        return False
+    return True
 
 
 def resolve_municipality_coordinate(
@@ -745,51 +1071,90 @@ def resolve_municipality_coordinate(
     geocode_cache: Optional[dict],
     geocode_delay: float = 1.0,
     validate_land: bool = False,
+    strict_land: bool = False,
+    strict_no_cache: bool = False,
+    skip_geocode: bool = False,
+    strict_municipality_coords: Optional[dict[str, tuple[float, float]]] = None,
 ) -> Optional[tuple[float, float]]:
-    location = lookup_municipality_coords(municipality)
-
-    if not validate_land:
+    if strict_land:
+        location = lookup_municipality_coords(
+            municipality,
+            municipality_coords=strict_municipality_coords,
+        )
         if location is not None:
             return location
+    elif strict_no_cache:
+        location = None
     else:
-        if location is not None:
-            reverse = reverse_geocode_point(location[0], location[1], geocode_delay)
-            if reverse is None:
-                return location
-            if is_water_reverse_point(reverse):
-                location = None
-            elif not reverse_matches_municipality(reverse, municipality):
-                location = None
-            else:
-                return location
+        location = lookup_municipality_coords(municipality)
+
+    def _accept_point(point: tuple[float, float]) -> Optional[tuple[float, float]]:
+        if not validate_land:
+            return point
+        if is_expected_municipality_coordinate(
+            point[0],
+            point[1],
+            municipality,
+            county,
+            geocode_delay,
+            strict=strict_land,
+        ):
+            return point
+        if strict_land and is_expected_municipality_coordinate(
+            point[0],
+            point[1],
+            municipality,
+            county,
+            geocode_delay,
+            strict=False,
+        ):
+            return point
+        return None
+
+    if location is not None:
+        accepted = _accept_point(location)
+        if accepted is not None:
+            return accepted
 
     if geocode_cache is None:
+        return None
+
+    if skip_geocode:
+        for query in (municipality, *(f"{municipality}, {county}" if county and county.lower() != "ukjent fylke" else ""), f"{municipality}, Norway"):
+            query = query.strip()
+            if not query:
+                continue
+            cached_point = lookup_cached_point(geocode_cache, query, strict_no_cache=strict_no_cache)
+            if cached_point is None:
+                continue
+            accepted = _accept_point(cached_point)
+            if accepted is not None:
+                return accepted
         return None
 
     query_variants = [municipality]
     if county and county.lower() != "ukjent fylke":
         query_variants.append(f"{municipality}, {county}")
     query_variants.append(f"{municipality}, Norway")
-    query_variants = list(dict.fromkeys(q for q in query_variants if q))
+    query_variants = list(dict.from_keys(q for q in query_variants if q))
 
     for query in query_variants:
         candidate = geocode_with_nominatim(
             query,
             geocode_cache,
             delay_seconds=geocode_delay,
+            municipality=municipality,
+            county=county,
+            force_refresh=validate_land or strict_land or strict_no_cache,
+            strict=strict_land,
+            strict_no_cache=strict_no_cache,
         )
         if candidate is None:
             continue
-        if not validate_land:
-            return candidate
-        reverse = reverse_geocode_point(candidate[0], candidate[1], geocode_delay)
-        if reverse is None:
-            return candidate
-        if is_water_reverse_point(reverse):
-            continue
-        if reverse_matches_municipality(reverse, municipality):
-            return candidate
-    return location
+        accepted = _accept_point(candidate)
+        if accepted is not None:
+            return accepted
+    return None
 
 
 def load_geocode_cache(path: str) -> dict:
@@ -813,27 +1178,83 @@ def save_geocode_cache(path: str, cache: dict) -> None:
         print(f"WARNING: cannot write geocode cache {path}: {exc}", file=sys.stderr)
 
 
+def load_strict_municipality_coords(path: str) -> dict[str, tuple[float, float]]:
+    try:
+        with open(path, "r", encoding="utf-8") as cache_file:
+            data = json.load(cache_file)
+    except FileNotFoundError:
+        return {}
+    except Exception as exc:
+        print(f"WARNING: cannot read strict municipality cache {path}: {exc}", file=sys.stderr)
+        return {}
+
+    if not isinstance(data, dict):
+        return {}
+
+    strict_coords: dict[str, tuple[float, float]] = {}
+    min_lat, min_lon, max_lat, max_lon = NORWAY_BOUNDS
+    for municipality, point in data.items():
+        if not isinstance(municipality, str) or not municipality.strip():
+            continue
+        if not isinstance(point, (list, tuple)) or len(point) != 2:
+            continue
+        try:
+            lat = float(point[0])
+            lon = float(point[1])
+        except (TypeError, ValueError):
+            continue
+        if not (min_lat <= lat <= max_lat and min_lon <= lon <= max_lon):
+            continue
+        strict_coords[municipality.strip()] = (lat, lon)
+
+    return strict_coords
+
+
+def save_strict_municipality_coords(
+    path: str,
+    strict_coords: dict[str, tuple[float, float]],
+) -> None:
+    serializable: dict[str, list[float]] = {}
+    for municipality, point in strict_coords.items():
+        if not isinstance(point, (list, tuple)) or len(point) != 2:
+            continue
+        try:
+            serializable[municipality] = [float(point[0]), float(point[1])]
+        except (TypeError, ValueError):
+            continue
+    if not serializable:
+        serializable = {}
+    try:
+        with open(path, "w", encoding="utf-8") as cache_file:
+            json.dump(serializable, cache_file, ensure_ascii=False, indent=2)
+    except Exception as exc:
+        print(f"WARNING: cannot write strict municipality cache {path}: {exc}", file=sys.stderr)
+
+
 def geocode_with_nominatim(
     query: str,
     cache: dict,
     delay_seconds: float = 1.0,
     max_retries: int = 3,
+    municipality: str | None = None,
+    county: str | None = None,
+    force_refresh: bool = False,
+    strict: bool = False,
+    strict_no_cache: bool = False,
 ) -> Optional[tuple[float, float]]:
     key = query.lower().strip()
-    cached = cache.get(key)
-    if cached == "not_found":
-        return None
-    if isinstance(cached, list) and len(cached) == 2:
-        try:
-            return float(cached[0]), float(cached[1])
-        except (TypeError, ValueError):
-            pass
+    if strict_no_cache:
+        key = f"__strict_no_cache__:{key}"
+    if not force_refresh:
+        cached_point = lookup_cached_point(cache, key, strict_no_cache=strict_no_cache)
+        if cached_point is not None:
+            return cached_point
 
     params = urllib.parse.urlencode(
         {
             "q": query,
             "format": "json",
-            "limit": 1,
+            "limit": 8,
             "addressdetails": 0,
             "countrycodes": "no",
             "viewbox": "4.0,57.8,32.0,72.2",
@@ -843,7 +1264,7 @@ def geocode_with_nominatim(
     request_url = f"{NOMINATIM_SEARCH_URL}?{params}"
 
     for retry in range(max_retries + 1):
-        wait = delay_seconds * (1 if retry == 0 else (retry + 1) * 2)
+        wait = delay_seconds * (2 ** max(retry, 1))
         if wait > 0:
             time.sleep(wait)
         request = urllib.request.Request(
@@ -858,7 +1279,7 @@ def geocode_with_nominatim(
         except urllib.error.HTTPError as exc:
             if exc.code == 429 and retry < max_retries:
                 retry_after = exc.headers.get("Retry-After") if exc.headers else None
-                wait = delay_seconds * (retry + 2)
+                wait = delay_seconds * (2 ** (retry + 1))
                 if retry_after:
                     try:
                         wait = max(wait, int(retry_after))
@@ -867,11 +1288,13 @@ def geocode_with_nominatim(
                 time.sleep(wait)
                 continue
             print(f"WARNING: geocode failed for '{query}': HTTP {exc.code}", file=sys.stderr)
-            cache[key] = "not_found"
+            if exc.code != 429:
+                cache[key] = "not_found"
             return None
         except Exception as exc:
             print(f"WARNING: geocode failed for '{query}': {exc}", file=sys.stderr)
-            cache[key] = "not_found"
+            if not force_refresh:
+                cache[key] = "not_found"
             return None
 
         break
@@ -880,27 +1303,40 @@ def geocode_with_nominatim(
         cache[key] = "not_found"
         return None
 
-    first = items[0]
-    lat = first.get("lat")
-    lon = first.get("lon")
-    if lat is None or lon is None:
-        cache[key] = "not_found"
-        return None
+    if municipality:
+        municipality = municipality.strip()
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        if municipality and not is_municipality_forward_candidate(
+            item,
+            municipality,
+            county=county,
+            strict=strict,
+        ):
+            continue
 
-    try:
-        point = (float(lat), float(lon))
-    except (TypeError, ValueError):
-        cache[key] = "not_found"
-        return None
-    min_lat, min_lon, max_lat, max_lon = NORWAY_BOUNDS
-    if not (min_lat <= point[0] <= max_lat and min_lon <= point[1] <= max_lon):
-        cache[key] = "not_found"
-        return None
+        lat = item.get("lat")
+        lon = item.get("lon")
+        if lat is None or lon is None:
+            continue
+        try:
+            point = (float(lat), float(lon))
+        except (TypeError, ValueError):
+            continue
+        min_lat, min_lon, max_lat, max_lon = NORWAY_BOUNDS
+        if not (min_lat <= point[0] <= max_lat and min_lon <= point[1] <= max_lon):
+            continue
 
-    cache[key] = list(point)
-    if delay_seconds > 0:
-        time.sleep(delay_seconds)
-    return point
+        if not strict_no_cache:
+            cache[key] = list(point)
+        if delay_seconds > 0:
+            time.sleep(delay_seconds)
+        return point
+
+    if not strict_no_cache:
+        cache[key] = "not_found"
+    return None
 
 
 def build_heatmap_html(
@@ -911,9 +1347,13 @@ def build_heatmap_html(
     skip_geocode: bool = False,
     show_markers: bool = False,
     validate_land: bool = False,
+    strict_land: bool = False,
+    strict_no_cache: bool = False,
+    strict_municipality_coords: Optional[dict[str, tuple[float, float]]] = None,
+    strict_municipality_verified: Optional[dict[str, tuple[float, float]]] = None,
     include_zero: bool = False,
 ) -> tuple[int, int]:
-    geocode_cache = load_geocode_cache(geocode_cache_path)
+    geocode_cache = {} if strict_no_cache else load_geocode_cache(geocode_cache_path)
     points: List[dict] = []
     not_found: List[str] = []
     max_value = 0
@@ -927,9 +1367,13 @@ def build_heatmap_html(
         location = resolve_municipality_coordinate(
             municipality=municipality,
             county=county,
-            geocode_cache=None if skip_geocode else geocode_cache,
+            geocode_cache=geocode_cache,
             geocode_delay=max(0.0, geocode_delay),
             validate_land=validate_land,
+            strict_land=strict_land,
+            strict_no_cache=strict_no_cache,
+            skip_geocode=skip_geocode,
+            strict_municipality_coords=strict_municipality_coords,
         )
 
         if location is None:
@@ -948,8 +1392,11 @@ def build_heatmap_html(
                 "percent": percent,
             }
         )
+        if strict_land and strict_municipality_verified is not None:
+            strict_municipality_verified[municipality] = (lat, lon)
 
-    save_geocode_cache(geocode_cache_path, geocode_cache)
+    if not strict_no_cache:
+        save_geocode_cache(geocode_cache_path, geocode_cache)
 
     if not points:
         return 0, len(not_found)
@@ -1142,8 +1589,37 @@ def parse_args() -> argparse.Namespace:
         "--validate-land",
         action="store_true",
         help=(
-            "Validate coordinates via reverse geocoding and skip points that land in water or don't match municipality. "
-            "If validation fails, tries online geocoding again."
+            "Validate coordinates via reverse geocoding and retry online geocoding if static coordinates fail county/municipality checks."
+            " If no validated point is found, municipality is skipped."
+        ),
+    )
+    parser.add_argument(
+        "--strict-land",
+        action="store_true",
+        help=(
+            "Apply the strictest land validation policy: candidates must match both municipality and county. "
+            "If strict mode is enabled, not_found cache entries are bypassed and weak reverse matches are rejected."
+        ),
+    )
+    parser.add_argument(
+        "--strict-municipality-cache",
+        default=STRICT_COORDINATES_PATH_DEFAULT,
+        help="Path for strict-mode verified municipality coordinates (overwrites on each strict run).",
+    )
+    parser.add_argument(
+        "--strict-no-cache",
+        action="store_true",
+        help=(
+            "Do not read/write geocode cache and validate coordinates only via fresh API lookups. "
+            "This mode also enables strict-land validation and starts from empty strict coordinates."
+        ),
+    )
+    parser.add_argument(
+        "--require-source-match",
+        action="store_true",
+        help=(
+            "Skip municipality rows from source table that cannot be matched to a known municipality reference "
+            "(defensive mode against malformed site data)."
         ),
     )
     parser.add_argument(
@@ -1175,13 +1651,32 @@ def fetch_html(url: str) -> str:
 
 def main() -> int:
     args = parse_args()
+    if args.strict_no_cache:
+        args.validate_land = True
+        args.strict_land = True
+    reference_municipality_names = load_reference_municipality_names(
+        args.strict_municipality_cache
+    )
+    strict_municipality_coords: Optional[dict[str, tuple[float, float]]] = None
+    strict_municipality_verified: dict[str, tuple[float, float]] | None = None
+    if args.strict_land:
+        if args.strict_no_cache:
+            strict_municipality_coords = {}
+        else:
+            strict_municipality_coords = load_strict_municipality_coords(args.strict_municipality_cache)
+        strict_municipality_verified = {}
     try:
         html_body = fetch_html(args.url)
     except Exception as exc:
         print(f"ERROR: Failed to fetch URL {args.url}: {exc}", file=sys.stderr)
         return 1
 
-    records = parse_tables(html_body, include_zero=not args.skip_zero)
+    records = parse_tables(
+        html_body,
+        include_zero=not args.skip_zero,
+        reference_municipality_names=reference_municipality_names,
+        require_reference_match=args.require_source_match,
+    )
     if not records:
         print("ERROR: No municipality rows were parsed.", file=sys.stderr)
         return 1
@@ -1207,10 +1702,19 @@ def main() -> int:
             show_markers=args.show_markers,
             include_zero=args.include_zero_points,
             validate_land=args.validate_land,
+            strict_land=args.strict_land,
+            strict_no_cache=args.strict_no_cache,
+            strict_municipality_coords=strict_municipality_coords,
+            strict_municipality_verified=strict_municipality_verified,
         )
         print(f"Heatmap: {mapped} points written to {args.map_output}")
         if missing:
             print(f"Heatmap: {missing} municipalities were not geocoded")
+        if args.strict_land and strict_municipality_verified is not None:
+            save_strict_municipality_coords(
+                args.strict_municipality_cache,
+                strict_municipality_verified,
+            )
 
     print(f"Done. Output: {args.output}")
     print(f"Parsed municipalities: {len(rows_for_report)}")
