@@ -35,8 +35,13 @@ NOMINATIM_REVERSE_URL = f"{NOMINATIM_BASE_URL}/reverse"
 OPEN_METEO_GEOCODE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 PROVIDER_USER_AGENT = "bosetting-probability-script/1.0"
 NORWAY_BOUNDS = (57.2, 4.0, 72.2, 32.5)
+NOMINATIM_VIEWBOX = "4.0,57.8,32.0,72.2"
+DEFAULT_REVERSE_ZOOM = 10
 WATER_REVERSE_TYPES = {"water", "bay", "fjord", "sea", "ocean", "coastline"}
-STRICT_COORDINATES_PATH_DEFAULT = "kommuner_geocode_cache_2026_online.json"
+STRICT_COORDINATES_PATH_DEFAULT = "kommuner_strict_municipality_cache_2026.json"
+DEFAULT_MAP_MIN_ZOOM = 4
+DEFAULT_MAP_MAX_ZOOM = 12
+DEFAULT_MARKER_CLUSTER_RADIUS = 50
 
 # Real administrative-center coordinates for every Norwegian municipality (2024 borders).
 # Key = municipality name as it appears in IMDi tables.
@@ -388,6 +393,35 @@ def sanitize_municipality_name(value: str) -> str:
     return value.strip()
 
 
+def strict_municipality_cache_key(
+    municipality: str,
+    county: str | None = None,
+) -> str:
+    municipality_norm = normalize_label(municipality)
+    if not municipality_norm:
+        return ""
+
+    county_norm = normalize_label(county or "")
+    if county_norm and county_norm != "ukjent fylke":
+        return f"{county_norm}|{municipality_norm}"
+    return municipality_norm
+
+
+def parse_strict_cache_key(cache_key: str) -> tuple[str, str]:
+    if not isinstance(cache_key, str):
+        return "", ""
+
+    normalized = cache_key.strip()
+    if not normalized:
+        return "", ""
+
+    if "|" not in normalized:
+        return "", normalize_label(normalized)
+
+    county_part, municipality_part = normalized.split("|", 1)
+    return normalize_label(county_part), normalize_label(municipality_part)
+
+
 def load_reference_municipality_names(path: str | None = None) -> set[str]:
     names = set(MUNICIPALITY_COORDS.keys())
     if not path:
@@ -396,11 +430,15 @@ def load_reference_municipality_names(path: str | None = None) -> set[str]:
         with open(path, "r", encoding="utf-8") as cache_file:
             data = json.load(cache_file)
         if isinstance(data, dict):
-            names.update(
-                key
-                for key, value in data.items()
-                if isinstance(key, str) and key.strip() and isinstance(value, (list, tuple))
-            )
+            for key, value in data.items():
+                if not isinstance(key, str) or not key.strip() or not isinstance(value, (list, tuple)):
+                    continue
+                if len(value) != 2:
+                    continue
+                _, municipality_name = parse_strict_cache_key(key)
+                municipality_name = sanitize_municipality_name(municipality_name)
+                if municipality_name:
+                    names.add(municipality_name)
     except FileNotFoundError:
         pass
     except Exception as exc:
@@ -738,9 +776,17 @@ def lookup_municipality_coords(
     coords = source.get(municipality)
     if coords is not None:
         return coords
+    municipality_lower = municipality.lower()
+    # Pass 1: case-insensitive exact match, then qualifier-stripped exact match
+    # (e.g. "Os" should match "Os (Hedm.)" before "Oslo")
     for key, val in source.items():
-        if key.lower() == municipality.lower():
+        if key.lower() == municipality_lower:
             return val
+        key_stripped = re.sub(r"\s*\([^)]+\)\s*$", "", key).strip().lower()
+        if key_stripped == municipality_lower:
+            return val
+    # Pass 2: prefix match as a last resort (only for partial names like "Oslo kommune")
+    for key, val in source.items():
         if key.startswith(municipality) or municipality.startswith(key):
             return val
     return None
@@ -786,6 +832,79 @@ def lookup_cached_point(
                 except (TypeError, ValueError):
                     continue
     return None
+
+
+def is_in_norway_bounds(lat: float, lon: float, bounds: tuple[float, float, float, float] = NORWAY_BOUNDS) -> bool:
+    min_lat, min_lon, max_lat, max_lon = bounds
+    return min_lat <= lat <= max_lat and min_lon <= lon <= max_lon
+
+
+def lookup_strict_municipality_coords(
+    strict_municipality_coords: Optional[dict[str, tuple[float, float]]],
+    municipality: str,
+    county: str | None = None,
+) -> Optional[tuple[float, float]]:
+    if not isinstance(strict_municipality_coords, dict):
+        return None
+
+    strict_key = strict_municipality_cache_key(municipality, county)
+    if not strict_key:
+        return None
+
+    point = strict_municipality_coords.get(strict_key)
+    if isinstance(point, (list, tuple)) and len(point) == 2:
+        try:
+            return float(point[0]), float(point[1])
+        except (TypeError, ValueError):
+            return None
+
+    county_norm = normalize_label(county or "")
+    if county_norm:
+        return None
+
+    legacy_key = normalize_label(municipality)
+    if not legacy_key:
+        return None
+
+    legacy_point = strict_municipality_coords.get(legacy_key)
+    if isinstance(legacy_point, (list, tuple)) and len(legacy_point) == 2:
+        try:
+            return float(legacy_point[0]), float(legacy_point[1])
+        except (TypeError, ValueError):
+            return None
+
+    return None
+
+
+def build_municipality_query_variants(
+    municipality: str,
+    county: str,
+) -> List[str]:
+    municipality_clean = (municipality or "").strip()
+    county_clean = (county or "").strip()
+    if not municipality_clean:
+        return []
+
+    queries: List[str] = [municipality_clean]
+    if "kommune" not in municipality_clean.lower():
+        queries.append(f"{municipality_clean} kommune")
+        queries.append(f"{municipality_clean} kommunesenter")
+        queries.append(f"{municipality_clean} municipal center")
+
+    normalized_county = normalize_label(county_clean)
+    if county_clean and normalized_county != "ukjent fylke":
+        queries.append(f"{municipality_clean}, {county_clean}")
+        queries.append(f"{municipality_clean} kommune, {county_clean}")
+        queries.append(f"{municipality_clean} kommunesenter, {county_clean}")
+
+    queries.extend(
+        [
+            f"{municipality_clean}, Norway",
+            f"{municipality_clean} kommune, Norway",
+        ]
+    )
+
+    return list(dict.fromkeys(q for q in queries if q))
 
 
 def normalize_label(value: str) -> str:
@@ -859,15 +978,17 @@ def county_matches(expected_county: str, candidate_county: str) -> bool:
 def reverse_geocode_point(
     lat: float,
     lon: float,
+    reverse_zoom: int = DEFAULT_REVERSE_ZOOM,
     delay_seconds: float = 1.0,
     max_retries: int = 3,
 ) -> Optional[dict]:
+    zoom = max(1, min(18, int(reverse_zoom)))
     params = urllib.parse.urlencode(
         {
             "format": "jsonv2",
             "lat": f"{lat:.6f}",
             "lon": f"{lon:.6f}",
-            "zoom": 12,
+            "zoom": zoom,
             "addressdetails": 1,
             "namedetails": 1,
         }
@@ -1041,9 +1162,12 @@ def is_expected_municipality_coordinate(
     municipality: str,
     county: str,
     geocode_delay: float,
+    reverse_zoom: int = DEFAULT_REVERSE_ZOOM,
     strict: bool = False,
 ) -> bool:
-    reverse = reverse_geocode_point(lat, lon, geocode_delay)
+    if not is_in_norway_bounds(lat, lon):
+        return False
+    reverse = reverse_geocode_point(lat, lon, reverse_zoom=reverse_zoom, delay_seconds=geocode_delay)
     if reverse is None:
         return False
     country = str(reverse.get("address", {}).get("country", "")).lower()
@@ -1098,20 +1222,11 @@ def resolve_municipality_coordinate(
     strict_no_cache: bool = False,
     skip_geocode: bool = False,
     strict_municipality_coords: Optional[dict[str, tuple[float, float]]] = None,
+    reverse_zoom: int = DEFAULT_REVERSE_ZOOM,
 ) -> Optional[tuple[float, float]]:
-    if strict_land:
-        location = lookup_municipality_coords(
-            municipality,
-            municipality_coords=strict_municipality_coords,
-        )
-        if location is not None:
-            return location
-    elif strict_no_cache:
-        location = None
-    else:
-        location = lookup_municipality_coords(municipality)
-
     def _accept_point(point: tuple[float, float]) -> Optional[tuple[float, float]]:
+        if not is_in_norway_bounds(point[0], point[1]):
+            return None
         if not validate_land:
             return point
         if is_expected_municipality_coordinate(
@@ -1120,6 +1235,7 @@ def resolve_municipality_coordinate(
             municipality,
             county,
             geocode_delay,
+            reverse_zoom=reverse_zoom,
             strict=strict_land,
         ):
             return point
@@ -1129,10 +1245,30 @@ def resolve_municipality_coordinate(
             municipality,
             county,
             geocode_delay,
+            reverse_zoom=reverse_zoom,
             strict=False,
         ):
             return point
         return None
+
+    # 1) Prefer hardcoded kommune centers
+    location = lookup_municipality_coords(municipality)
+    if location is not None:
+        accepted = _accept_point(location)
+        if accepted is not None:
+            return accepted
+
+    # 2) Prefer strict vetted center dictionary when strict mode is enabled.
+    if strict_land and strict_municipality_coords is not None:
+        location = lookup_strict_municipality_coords(
+            strict_municipality_coords,
+            municipality,
+            county,
+        )
+        if location is not None:
+            accepted = _accept_point(location)
+            if accepted is not None:
+                return accepted
 
     if location is not None:
         accepted = _accept_point(location)
@@ -1142,8 +1278,12 @@ def resolve_municipality_coordinate(
     if geocode_cache is None:
         return None
 
+    query_variants = build_municipality_query_variants(municipality, county)
+    if not query_variants:
+        return None
+
     if skip_geocode:
-        for query in (municipality, *(f"{municipality}, {county}" if county and county.lower() != "ukjent fylke" else ""), f"{municipality}, Norway"):
+        for query in query_variants:
             query = query.strip()
             if not query:
                 continue
@@ -1159,14 +1299,12 @@ def resolve_municipality_coordinate(
                 return accepted
         return None
 
-    query_variants = [municipality]
-    if county and county.lower() != "ukjent fylke":
-        query_variants.append(f"{municipality}, {county}")
-    query_variants.append(f"{municipality}, Norway")
-    query_variants = list(dict.fromkeys(q for q in query_variants if q))
+    if geocoder_provider == "open-meteo":
+        provider_chain = ("nominatim", "open-meteo") if (strict_land or validate_land) else ("open-meteo", "nominatim")
+    else:
+        provider_chain = (geocoder_provider,)
 
     for query in query_variants:
-        provider_chain = (geocoder_provider, "nominatim") if geocoder_provider == "open-meteo" else (geocoder_provider,)
         for provider in provider_chain:
             candidate = geocode_with_provider(
                 query,
@@ -1235,7 +1373,13 @@ def load_strict_municipality_coords(path: str) -> dict[str, tuple[float, float]]
             continue
         if not (min_lat <= lat <= max_lat and min_lon <= lon <= max_lon):
             continue
-        strict_coords[municipality.strip()] = (lat, lon)
+        county_part, municipality_part = parse_strict_cache_key(municipality)
+        if not municipality_part:
+            continue
+
+        strict_key = strict_municipality_cache_key(municipality_part, county_part)
+        if strict_key:
+            strict_coords[strict_key] = (lat, lon)
 
     return strict_coords
 
@@ -1360,9 +1504,9 @@ def geocode_with_provider(
                 "q": query,
                 "format": "json",
                 "limit": 8,
-                "addressdetails": 0,
+                "addressdetails": 1,
                 "countrycodes": "no",
-                "viewbox": "4.0,57.8,32.0,72.2",
+                "viewbox": NOMINATIM_VIEWBOX,
                 "bounded": 1,
             }
         )
@@ -1480,6 +1624,11 @@ def build_heatmap_html(
     strict_municipality_coords: Optional[dict[str, tuple[float, float]]] = None,
     strict_municipality_verified: Optional[dict[str, tuple[float, float]]] = None,
     include_zero: bool = False,
+    reverse_zoom: int = DEFAULT_REVERSE_ZOOM,
+    map_min_zoom: int = DEFAULT_MAP_MIN_ZOOM,
+    map_max_zoom: int = DEFAULT_MAP_MAX_ZOOM,
+    cluster_markers: bool = False,
+    marker_cluster_radius: int = DEFAULT_MARKER_CLUSTER_RADIUS,
 ) -> tuple[int, int]:
     geocode_cache = {} if strict_no_cache else load_geocode_cache(geocode_cache_path)
     points: List[dict] = []
@@ -1503,6 +1652,7 @@ def build_heatmap_html(
             strict_no_cache=strict_no_cache,
             skip_geocode=skip_geocode,
             strict_municipality_coords=strict_municipality_coords,
+            reverse_zoom=reverse_zoom,
         )
 
         if location is None:
@@ -1522,7 +1672,9 @@ def build_heatmap_html(
             }
         )
         if strict_land and strict_municipality_verified is not None:
-            strict_municipality_verified[municipality] = (lat, lon)
+            strict_key = strict_municipality_cache_key(municipality, county)
+            if strict_key:
+                strict_municipality_verified[strict_key] = (lat, lon)
 
     if not strict_no_cache:
         save_geocode_cache(geocode_cache_path, geocode_cache)
@@ -1538,8 +1690,11 @@ def build_heatmap_html(
   <title>IMDi bosetting 2026 – heatmap</title>
   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />
   <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\" />
+  <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css\" />
+  <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css\" />
   <script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"></script>
   <script src=\"https://unpkg.com/leaflet.heat/dist/leaflet-heat.js\"></script>
+  <script src=\"https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js\"></script>
   <style>
     html, body {{ margin: 0; padding: 0; width: 100%; height: 100%; }}
     #map {{ width: 100%; height: 100%; }}
@@ -1549,9 +1704,9 @@ def build_heatmap_html(
   <div id=\"map\"></div>
   <script>
     const points = {points_json};
-    const map = L.map('map');
+    const map = L.map('map', {{ minZoom: {map_min_zoom}, maxZoom: {map_max_zoom} }});
     const baseLayer = L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
-      maxZoom: 12,
+      maxZoom: {map_max_zoom},
       attribution: '&copy; OpenStreetMap contributors'
     }}).addTo(map);
 
@@ -1582,7 +1737,13 @@ def build_heatmap_html(
     }};
 
     if (showMarkers) {{
-      const markerLayer = L.layerGroup();
+      const useMarkerCluster = {str(cluster_markers).lower()};
+      const markerLayer = useMarkerCluster
+        ? L.markerClusterGroup({{
+            maxClusterRadius: {marker_cluster_radius},
+            disableClusteringAtZoom: 11
+          }})
+        : L.layerGroup();
       for (const p of points) {{
         const intensity = maxPercent > 0 ? (p.percent / maxPercent) : 0;
         const size = 3 + Math.max(2, intensity) * 10;
@@ -1739,7 +1900,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--strict-municipality-cache",
         default=STRICT_COORDINATES_PATH_DEFAULT,
-        help="Path for strict-mode verified municipality coordinates (overwrites on each strict run).",
+        help=(
+            "Path for strict-mode verified municipality coordinates (overwrites on each strict run). "
+            "Keys are stored as county|municipality where possible to avoid name collisions."
+        ),
     )
     parser.add_argument(
         "--strict-no-cache",
@@ -1769,6 +1933,35 @@ def parse_args() -> argparse.Namespace:
             "Keep municipalities with zero accepted_to_settle in heatmap output "
             "(by default only municipalities with value > 0 are rendered)."
         ),
+    )
+    parser.add_argument(
+        "--reverse-zoom",
+        type=int,
+        default=DEFAULT_REVERSE_ZOOM,
+        help="Reverse geocode zoom level used for municipality validation.",
+    )
+    parser.add_argument(
+        "--map-min-zoom",
+        type=int,
+        default=DEFAULT_MAP_MIN_ZOOM,
+        help="Minimum zoom for generated map.",
+    )
+    parser.add_argument(
+        "--map-max-zoom",
+        type=int,
+        default=DEFAULT_MAP_MAX_ZOOM,
+        help="Maximum zoom for base map tiles.",
+    )
+    parser.add_argument(
+        "--cluster-markers",
+        action="store_true",
+        help="Render municipality markers in clustered mode when markers are enabled.",
+    )
+    parser.add_argument(
+        "--marker-cluster-radius",
+        type=int,
+        default=DEFAULT_MARKER_CLUSTER_RADIUS,
+        help="Cluster radius in pixels for Leaflet marker clustering.",
     )
     return parser.parse_args()
 
@@ -1844,6 +2037,11 @@ def main() -> int:
             geocoder_provider=args.geocoder_provider,
             strict_municipality_coords=strict_municipality_coords,
             strict_municipality_verified=strict_municipality_verified,
+            reverse_zoom=args.reverse_zoom,
+            map_min_zoom=args.map_min_zoom,
+            map_max_zoom=args.map_max_zoom,
+            cluster_markers=args.cluster_markers,
+            marker_cluster_radius=args.marker_cluster_radius,
         )
         print(f"Heatmap: {mapped} points written to {args.map_output}")
         if missing:
